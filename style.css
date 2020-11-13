@@ -1,0 +1,99 @@
+html, body{
+  height: 100%;
+  margin: 0;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+#main{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#security{
+  text-align: center;
+  padding: 5px;
+  background-color: red;
+  color: white;
+}
+
+#security b{
+ animation: blinker 1s linear infinite;
+}
+
+#controls{
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px;
+}
+
+#settings{
+  flex-basis: 5%;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+
+#help{
+  flex-basis: 5%;
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+
+#xrp_secret_container{
+  padding: 5px;
+  flex-basis: 25%;
+}
+
+#xrp_secret_input_wrapper{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#xrp_secret{
+  flex-basis: 90%;
+}
+
+#view_xrp_secret{
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+#hide_xrp_secret{
+  display: none;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+#eth_address_container{
+  padding: 5px;
+  flex-basis: 25%;
+}
+
+#eth_address_input_wrapper{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#eth_address{
+  flex-basis: 90%;
+}
+
+#create_eth_address{
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+#submit_container{
+  padding: 25px;
+  text-align: center;
+}

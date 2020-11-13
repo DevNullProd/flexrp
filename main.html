@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css" />
+    <script type="text/javascript" src="./main.js"></script>
+</head>
+
+<body>
+  <div id="main">
+    <div id="security">
+      This app requires access to your private XRP secret key:<br/><b>ONLY RUN IT IN A SECURE ENVIRONMENT</b>
+    </div>
+
+    <div id="controls">
+      <img id="settings" src="./assets/settings.svg" />
+      <img id="help"     src="./assets/help.svg" />
+    </div>
+
+    <div id="xrp_secret_container">
+      <h2>XRP Secret Key:</h2>
+
+      <div id="xrp_secret_input_wrapper">
+        <input id="xrp_secret" type="password" />
+        <img id="view_xrp_secret" src="./assets/view.svg" />
+        <img id="hide_xrp_secret" src="./assets/hide.svg" />
+      </div>
+    </div>
+
+    <div id="eth_address_container">
+      <h2>ETH Address:</h2>
+
+      <div id="eth_address_input_wrapper">
+        <input id="eth_address" type="password" />
+        <img id="create_eth_address" src="./assets/plus.svg" />
+      </div>
+    </div>
+
+    <div id="submit_container">
+      <input type="button" value="Submit" />
+    </div>
+  </div>
+</body>
+
+</html>
