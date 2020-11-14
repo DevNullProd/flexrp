@@ -14,6 +14,7 @@ function wire_up_settings(){
 function wire_up_help(){
   var help = document.getElementById("help");
   help.addEventListener("click",function(e){
+    ipcRenderer.send('show_help');
   },false);
 }
 

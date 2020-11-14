@@ -11,7 +11,7 @@ const {
 
 var main;
 
-function createWindow () {
+function createMain () {
   main = new BrowserWindow({
     width: 800,
     height: 600,
@@ -33,13 +33,13 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
+    createMain()
   }
 })
 
 ///
 
-ipcMain.on('initial_alert', (event, path) => { 
+ipcMain.on('initial_alert', (event) => { 
   dialog.showMessageBox(main, {
     type : "warning",
     message : "This app requires access to your private XRP secret key",
@@ -52,7 +52,21 @@ ipcMain.on('initial_alert', (event, path) => {
   })
 })
 
-ipcMain.on('confirm_generate_eth', (event, path) => {
+ipcMain.on('show_help', (event) => { 
+  var help = new BrowserWindow({
+    width: 400,
+    height: 600,
+    title : "Flare / XRP Setup Help",
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+
+  help.setMenu(null)
+  help.loadFile('help.html')
+})
+
+ipcMain.on('confirm_generate_eth', (event) => {
   dialog.showMessageBox(main, {
     message : "This will generate an ETH secret key and display it on the screen. Do you wish to continue?",
     buttons : ["CANCEL", "OK"]
@@ -63,7 +77,7 @@ ipcMain.on('confirm_generate_eth', (event, path) => {
   })
 })
 
-ipcMain.on('generate_eth', (event, path) => {
+ipcMain.on('generate_eth', (event) => {
   const wallet = EthWallet.generate();
 
   dialog.showMessageBox(main, {
@@ -79,4 +93,4 @@ ipcMain.on('generate_eth', (event, path) => {
 
 ///
 
-app.whenReady().then(createWindow)
+app.whenReady().then(createMain)
