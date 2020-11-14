@@ -8,6 +8,7 @@ const ripple_api = new RippleAPI();
 function wire_up_settings(){
   var settings = document.getElementById("settings");
   settings.addEventListener("click",function(e){
+    ipcRenderer.send('show_settings');
   },false);
 }
 
