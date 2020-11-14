@@ -41,8 +41,9 @@ function wire_up_create_eth_address(){
     ipcRenderer.send("generate_eth");
   })
 
-  ipcRenderer.on("generated_eth", () => {
-    // ... set eth key
+  var address = document.getElementById("eth_address")
+  ipcRenderer.on("generated_eth", (event, addr) => {
+    address.value = addr;
   })
 
   var create = document.getElementById("create_eth_address");

@@ -6,9 +6,10 @@
   "author": "Dev Null Productions <devnullproductions@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "electron": "^10.1.5"
+    "electron": "^10.1.5",
+    "ethereumjs-wallet": "^1.0.1"
   },
   "scripts": {
-        "start": "electron ."
+    "start": "electron ."
   }
 }

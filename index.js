@@ -5,6 +5,10 @@ const {
   dialog
 } = require('electron')
 
+//const EthWallet = require('ethereumjs-wallet').default;
+
+///
+
 var main;
 
 function createWindow () {
@@ -41,6 +45,7 @@ ipcMain.on('initial_alert', (event, path) => {
     message : "This app requires access to your private XRP secret key",
     checkboxLabel : "I am running this on a secure computer",
     buttons : ["OK"]
+
   }).then((result) => {
     if(!result.checkboxChecked)
       app.quit()
@@ -59,16 +64,16 @@ ipcMain.on('confirm_generate_eth', (event, path) => {
 })
 
 ipcMain.on('generate_eth', (event, path) => {
-  // ... generate secret + address
+  const wallet = EthWallet.generate();
 
   dialog.showMessageBox(main, {
-    message : "This is your ETH secret. Once you close this dialog it will dissapear forever. MAKE SURE TO SAVE IT:",
+    message : "This is your ETH secret. Once you close this dialog it will dissapear forever. MAKE SURE TO SAVE IT: " + wallet.getPrivateKeyString(),
     checkboxLabel : "I have saved this ETH secret",
     buttons : ["CANCEL", "OK"]
 
   }).then((result) => {
     if(result.response == 1 && result.checkboxChecked)
-      event.reply("generated_eth", address)
+      event.reply("generated_eth", wallet.getAddressString())
   })
 })
 
