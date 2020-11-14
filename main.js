@@ -3,7 +3,17 @@ const {ipcRenderer} = require('electron')
 const RippleAPI = require('ripple-lib').RippleAPI;
 const ripple_api = new RippleAPI();
 
+const EthWallet = require('ethereumjs-wallet').default;
+const { isValidAddress } = require('ethereumjs-util')
+
+var inputs_valid = {xrp : false, eth : false};
+
 ///
+
+function toggle_submit(){
+  var submit = document.getElementById("submit");
+  submit.disabled = !inputs_valid.xrp || !inputs_valid.eth;
+}
 
 function wire_up_settings(){
   var settings = document.getElementById("settings");
@@ -19,18 +29,26 @@ function wire_up_help(){
   },false);
 }
 
-function wire_up_xrp_secret(){
+function validate_xrp_secret(){
   var xrp_secret = document.getElementById("xrp_secret");
   var xrp_secret_invalid = document.getElementById("xrp_secret_invalid")
+
+  inputs_valid.xrp = ripple_api.isValidSecret(xrp_secret.value)
+
+  if(inputs_valid.xrp){
+    xrp_secret_invalid.style.display = 'none';
+
+  }else{
+    xrp_secret_invalid.style.display = 'block';
+  }
+
+  toggle_submit();
+}
+
+function wire_up_xrp_secret(){
+  var xrp_secret = document.getElementById("xrp_secret");
   xrp_secret.addEventListener("input",function(e){
-    const valid = ripple_api.isValidSecret(xrp_secret.value)
-
-    if(valid){
-      xrp_secret_invalid.style.display = 'none';
-
-    }else{
-      xrp_secret_invalid.style.display = 'block';
-    }
+    validate_xrp_secret();
   },false);
 }
 
@@ -52,17 +70,45 @@ function wire_up_toggle_xrp_secret(){
   },false);
 }
 
+function validate_eth_address(){
+  var eth_address = document.getElementById("eth_address")
+  var eth_address_invalid = document.getElementById("eth_address_invalid")
+
+  try{
+    inputs_valid.eth = isValidAddress(eth_address.value);
+  }catch(err){
+    inputs_valid.eth = false;
+  }
+
+  if(inputs_valid.eth){
+    eth_address_invalid.style.display = 'none';
+
+  }else{
+    eth_address_invalid.style.display = 'block';
+  }
+
+  toggle_submit();
+}
+
 function wire_up_eth_address(){
+  var eth_address = document.getElementById("eth_address")
+  eth_address.addEventListener("input",function(e){
+    validate_eth_address();
+  })
 }
 
 function wire_up_create_eth_address(){
+  const wallet = EthWallet.generate();
+
   ipcRenderer.on("generate_eth_confirmed", () => {
-    ipcRenderer.send("generate_eth");
+    ipcRenderer.send("show_eth_secret", wallet.getPrivateKeyString());
   })
 
   var address = document.getElementById("eth_address")
-  ipcRenderer.on("generated_eth", (event, addr) => {
-    address.value = addr;
+  ipcRenderer.on("eth_secret_saved", (event) => {
+    address.value = wallet.getAddressString();
+    inputs_valid.eth = true;
+    toggle_submit();
   })
 
   var create = document.getElementById("create_eth_address");

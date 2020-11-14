@@ -5,8 +5,6 @@ const {
   dialog
 } = require('electron')
 
-//const EthWallet = require('ethereumjs-wallet').default;
-
 ///
 
 var main_win, help_win, settings_win;
@@ -108,17 +106,15 @@ ipcMain.on('confirm_generate_eth', (event) => {
   })
 })
 
-ipcMain.on('generate_eth', (event) => {
-  const wallet = EthWallet.generate();
-
+ipcMain.on('show_eth_secret', (event, secret) => {
   dialog.showMessageBox(main_win, {
-    message : "This is your ETH secret. Once you close this dialog it will dissapear forever. MAKE SURE TO SAVE IT: " + wallet.getPrivateKeyString(),
+    message : "This is your ETH secret. Once you close this dialog it will dissapear forever. MAKE SURE TO SAVE IT: " + secret,
     checkboxLabel : "I have saved this ETH secret",
     buttons : ["CANCEL", "OK"]
 
   }).then((result) => {
     if(result.response == 1 && result.checkboxChecked)
-      event.reply("generated_eth", wallet.getAddressString())
+      event.reply("eth_secret_saved")
   })
 })
 
