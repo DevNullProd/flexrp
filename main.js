@@ -37,6 +37,18 @@ function wire_up_eth_address(){
 }
 
 function wire_up_create_eth_address(){
+  ipcRenderer.on("generate_eth_confirmed", () => {
+    ipcRenderer.send("generate_eth");
+  })
+
+  ipcRenderer.on("generated_eth", () => {
+    // ... set eth key
+  })
+
+  var create = document.getElementById("create_eth_address");
+  create.addEventListener("click",function(e){
+    ipcRenderer.send('confirm_generate_eth');
+  },false);
 }
 
 function wire_up_controls(){
