@@ -1,5 +1,10 @@
 const {ipcRenderer} = require('electron')
 
+const RippleAPI = require('ripple-lib').RippleAPI;
+const ripple_api = new RippleAPI();
+
+///
+
 function wire_up_settings(){
   var settings = document.getElementById("settings");
   settings.addEventListener("click",function(e){
@@ -13,6 +18,18 @@ function wire_up_help(){
 }
 
 function wire_up_xrp_secret(){
+  var xrp_secret = document.getElementById("xrp_secret");
+  var xrp_secret_invalid = document.getElementById("xrp_secret_invalid")
+  xrp_secret.addEventListener("input",function(e){
+    const valid = ripple_api.isValidSecret(xrp_secret.value)
+
+    if(valid){
+      xrp_secret_invalid.style.display = 'none';
+
+    }else{
+      xrp_secret_invalid.style.display = 'block';
+    }
+  },false);
 }
 
 function wire_up_toggle_xrp_secret(){

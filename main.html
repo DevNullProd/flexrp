@@ -20,8 +20,17 @@
     <div id="xrp_secret_container">
       <h2>XRP Secret Key:</h2>
 
-      <div id="xrp_secret_input_wrapper">
-        <input id="xrp_secret" type="password" />
+      <div id="xrp_secret_subcontainer">
+        <div id="xrp_secret_wrapper">
+          <input id="xrp_secret" type="password" />
+
+          <div id="xrp_secret_error">
+            <div id="xrp_secret_invalid">
+              Invalid XRP Secret
+            </div>
+          </div>
+        </div>
+
         <img id="view_xrp_secret" src="./assets/view.svg" title="Show Secret" />
         <img id="hide_xrp_secret" src="./assets/hide.svg" title="Hide Secret" />
       </div>
@@ -30,8 +39,17 @@
     <div id="eth_address_container">
       <h2>ETH Address:</h2>
 
-      <div id="eth_address_input_wrapper">
-        <input id="eth_address" type="text" />
+      <div id="eth_address_subcontainer">
+        <div id="eth_address_wrapper">
+          <input id="eth_address" type="text" />
+
+          <div id="eth_address_error">
+            <div id="eth_address_invalid">
+              Invalid ETH Address
+            </div>
+          </div>
+        </div>
+
         <img id="create_eth_address" src="./assets/plus.svg" title="Create ETH Address" />
       </div>
     </div>

@@ -51,13 +51,18 @@ html, body{
   flex-basis: 25%;
 }
 
-#xrp_secret_input_wrapper{
+#xrp_secret_subcontainer{
   display: flex;
   justify-content: space-evenly;
 }
 
-#xrp_secret{
+#xrp_secret_wrapper{
   flex-basis: 90%;
+}
+
+#xrp_secret{
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #view_xrp_secret{
@@ -73,18 +78,41 @@ html, body{
   cursor: pointer;
 }
 
+#xrp_secret_error{
+  color: red;
+  font-weight: bold;
+}
+
+#xrp_secret_invalid{
+  display: none;
+}
+
 #eth_address_container{
   padding: 5px;
   flex-basis: 25%;
 }
 
-#eth_address_input_wrapper{
+#eth_address_subcontainer{
   display: flex;
   justify-content: space-evenly;
 }
 
-#eth_address{
+#eth_address_wrapper{
   flex-basis: 90%;
+}
+
+#eth_address{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#eth_address_error{
+  color: red;
+  font-weight: bold;
+}
+
+#eth_address_invalid{
+  display: none;
 }
 
 #create_eth_address{
