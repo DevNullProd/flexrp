@@ -89,6 +89,10 @@ ipcMain.on('close_settings', (event) => {
   settings_win.close();
 })
 
+ipcMain.on('get_settings', (event) => {
+  event.reply('got_settings', settings)
+})
+
 ipcMain.on('set_setting', (event, setting) => { 
   Object.assign(settings, setting)
 })

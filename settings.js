@@ -29,8 +29,21 @@ function wire_up_controls(){
   wire_up_close();
 }
 
+function restore_settings(){
+  var offline = document.getElementById("offline");
+  var testnet = document.getElementById("testnet");
+
+  ipcRenderer.on("got_settings", (event, settings) => {
+    offline.checked = settings.offline
+    testnet.checked = settings.testnet
+  })
+
+  ipcRenderer.send("get_settings")
+}
+
 function dom_content_loaded(){
   wire_up_controls();
+  restore_settings();
 }
 
 document.addEventListener("DOMContentLoaded", function(){
