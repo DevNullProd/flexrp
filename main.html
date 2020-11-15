@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="common.css" />
     <script type="text/javascript" src="./main.js"></script>
 </head>
 
@@ -24,7 +25,7 @@
         <div id="xrp_secret_wrapper">
           <input id="xrp_secret" type="password" />
 
-          <div id="xrp_secret_error">
+          <div id="xrp_secret_error" class="error">
             <div id="xrp_secret_invalid">
               Invalid XRP Secret
             </div>
@@ -43,7 +44,7 @@
         <div id="eth_address_wrapper">
           <input id="eth_address" type="text" />
 
-          <div id="eth_address_error">
+          <div id="eth_address_error" class="error">
             <div id="eth_address_invalid">
               Invalid ETH Address
             </div>
@@ -54,8 +55,8 @@
       </div>
     </div>
 
-    <div id="submit_container">
-      <input id="submit" type="button" value="Submit" disabled />
+    <div id="sign_container">
+      <input id="sign" type="button" value="Sign" disabled />
     </div>
   </div>
 </body>

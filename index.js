@@ -8,7 +8,13 @@ const {
 ///
 
 var main_win, help_win, settings_win;
-var settings = {testnet : false, offline : false};
+var settings = {
+  testnet : false,
+  offline : false,
+  fee : null,
+  sequence : null,
+  maxLedgerVersion : null
+};
 
 function createMain () {
   main_win = new BrowserWindow({

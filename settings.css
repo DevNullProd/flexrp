@@ -8,6 +8,43 @@ html, body{
   flex-direction: column;
 }
 
+#testnet_container{
+  display: flex;
+  justify-content: space-between;
+}
+
+#offline_container{
+  display: flex;
+  justify-content: space-between;
+}
+
+#fee_container{
+  display: none;
+  justify-content: space-between;
+}
+
+#fee_invalid{
+  display: none;
+}
+
+#sequence_container{
+  display: none;
+  justify-content: space-between;
+}
+
+#sequence_invalid{
+  display: none;
+}
+
+#max_ledger_version_container{
+  display: none;
+  justify-content: space-between;
+}
+
+#max_ledger_version_invalid{
+  display: none;
+}
+
 #close_container{
   padding: 25px;
   text-align: center;

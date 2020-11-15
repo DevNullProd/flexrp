@@ -78,11 +78,6 @@ html, body{
   cursor: pointer;
 }
 
-#xrp_secret_error{
-  color: red;
-  font-weight: bold;
-}
-
 #xrp_secret_invalid{
   display: none;
 }
@@ -106,11 +101,6 @@ html, body{
   box-sizing: border-box;
 }
 
-#eth_address_error{
-  color: red;
-  font-weight: bold;
-}
-
 #eth_address_invalid{
   display: none;
 }
@@ -121,7 +111,7 @@ html, body{
   cursor: pointer;
 }
 
-#submit_container{
+#sign_container{
   padding: 25px;
   text-align: center;
 }
