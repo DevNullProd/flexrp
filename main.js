@@ -171,6 +171,7 @@ async function process_tx(settings){
 function wire_up_sign(){
   var sign = document.getElementById("sign")
   sign.addEventListener("click",function(e){
+    sign.disabled = true;
     ipcRenderer.on("got_settings", (event, settings) => {
       process_tx(settings);
     })
