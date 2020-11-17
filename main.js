@@ -9,13 +9,15 @@ const { isValidAddress } = require('ethereumjs-util')
 var inputs_valid = {xrp : false, eth : false};
 
 var _online_api;
-function online_api(settings){
+async function online_api(settings){
   if(_online_api) return _online_api;
 
   _online_api = new RippleAPI({
     server : settings.testnet ? 'wss://s.altnet.rippletest.net:51233' :
                                 'wss://s1.ripple.com'
   })
+
+  await _online_api.connect();
   return _online_api;
 }
 
@@ -135,7 +137,7 @@ function wire_up_create_eth_address(){
   },false);
 }
 
-function process_tx(settings){
+async function sign_tx(api, instructions){
   var xrp_secret = document.getElementById("xrp_secret");
   var eth_address = document.getElementById("eth_address")
 
@@ -145,20 +147,25 @@ function process_tx(settings){
   // Eth address to message key
   const message_key = '02' + (new Array(25).join("0")) + eth_address.value.substr(2)
 
-  const api = settings.offline ? offline_api : online_api(settings);
-  const instructions = settings.offline ? {
-    fee : settings.fee,
-    sequence : settings.sequence,
-    maxLedgerVersion : settings.maxLedgerVersion
-  } : {}
-
   // Create AccountSet transaction, setting the message key, and sign
-  offline_api.prepareSettings(xrp_addr, {messageKey: message_key}, instructions)
-            .then((prepared) => {
-              const signed = offline_api.sign(prepared.txJSON, xrp_secret.value)
-            })
+  const prepared = await api.prepareSettings(xrp_addr, {messageKey: message_key}, instructions)
+  return api.sign(prepared.txJSON, xrp_secret.value)
+}
 
-  // ... if(!settings.offline) submit tx; else display
+async function process_tx(settings){
+  if(settings.offline){
+    const instructions = {
+      fee : settings.fee,
+      sequence : settings.sequence,
+      maxLedgerVersion : settings.maxLedgerVersion
+    }
+    const signed = await sign_tx(offline_api)
+    // .. display signed tx
+
+  }else{
+    const signed = await sign_tx(await online_api(settings), {})
+    // ... submit tx
+  }
 }
 
 function wire_up_sign(){
