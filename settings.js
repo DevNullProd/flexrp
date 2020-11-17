@@ -48,7 +48,8 @@ function wire_up_fee(){
 
   fee.addEventListener("input",function(e){
     const value = fee.value;
-    const is_valid = is_int(parseInt(value)) || is_float(parseFloat(value));
+    const float_value = parseFloat(value)
+    const is_valid = is_int(float_value) || is_float(float_value);
     if(is_valid){
       error.style.display = "none";
       ipcRenderer.send('set_setting', {fee : value});
@@ -64,11 +65,11 @@ function wire_up_sequence(){
   var error = document.getElementById("sequence_invalid");
 
   sequence.addEventListener("input",function(e){
-    const value = parseInt(sequence.value)
-    const is_valid = is_int(value);
+    const float_value = parseFloat(sequence.value)
+    const is_valid = is_int(float_value) && !is_float(float_value);
     if(is_valid){
       error.style.display = "none";
-      ipcRenderer.send('set_setting', {sequence : value});
+      ipcRenderer.send('set_setting', {sequence : float_value});
 
     }else{
       error.style.display = "block";
@@ -81,11 +82,11 @@ function wire_up_max_ledger_version(){
   var error = document.getElementById("sequence_invalid");
 
   max_ledger_version.addEventListener("input",function(e){
-    const value = parseInt(max_ledger_version.value);
-    const is_valid = is_int(value);
+    const float_value = parseFloat(max_ledger_version.value);
+    const is_valid = is_int(float_value) && !is_float(float_value);
     if(is_valid){
       error.style.display = "none";
-      ipcRenderer.send('set_setting', {max_ledger_version : value});
+      ipcRenderer.send('set_setting', {max_ledger_version : float_value});
 
     }else{
       error.style.display = "block";
