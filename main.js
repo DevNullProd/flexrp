@@ -163,15 +163,19 @@ async function process_tx(settings){
     ipcRenderer.send("show_signed_tx", signed.signedTransaction)
 
   }else{
-    const signed = await sign_tx(await online_api(settings), {})
-    // ... submit tx
+    const api = await online_api(settings)
+    const signed = await sign_tx(api, {})
+    await api.submit(signed.signedTransaction);
+    ipcRenderer.send("submit_success")
   }
 }
 
 function wire_up_sign(){
-  var sign = document.getElementById("sign")
+  var loader = document.getElementById("loader");
+  var sign = document.getElementById("sign");
   sign.addEventListener("click",function(e){
-    sign.disabled = true;
+    loader.style.display = 'block';
+    sign.style.display = 'none';
     ipcRenderer.on("got_settings", (event, settings) => {
       process_tx(settings);
     })

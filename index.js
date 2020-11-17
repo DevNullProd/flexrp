@@ -132,6 +132,15 @@ ipcMain.on('show_signed_tx', (event, signed) => {
   })
 })
 
+ipcMain.on("submit_success", (event) => {
+  dialog.showMessageBox(main_win, {
+    message : "Successfully submitted TX. You XRP account has been setup to receive Flare Spark tokens.",
+    buttons : ["OK"]
+  }).then((result) => {
+    app.quit()
+  })
+})
+
 ///
 
 app.whenReady().then(createMain)
