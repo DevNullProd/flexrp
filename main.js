@@ -40,11 +40,8 @@ function wire_up_help(){
   },false);
 }
 
-function validate_xrp_secret(){
-  var xrp_secret = document.getElementById("xrp_secret");
+function toggle_xrp_secret_error(){
   var xrp_secret_invalid = document.getElementById("xrp_secret_invalid")
-
-  inputs_valid.xrp = offline_api.isValidSecret(xrp_secret.value)
 
   if(inputs_valid.xrp){
     xrp_secret_invalid.style.display = 'none';
@@ -52,7 +49,13 @@ function validate_xrp_secret(){
   }else{
     xrp_secret_invalid.style.display = 'block';
   }
+}
 
+function validate_xrp_secret(){
+  var xrp_secret = document.getElementById("xrp_secret");
+
+  inputs_valid.xrp = offline_api.isValidSecret(xrp_secret.value)
+  toggle_xrp_secret_error();
   toggle_sign();
 }
 
@@ -81,9 +84,18 @@ function wire_up_toggle_xrp_secret(){
   },false);
 }
 
+function toggle_eth_address_error(){
+  var eth_address_invalid = document.getElementById("eth_address_invalid")
+  if(inputs_valid.eth){
+    eth_address_invalid.style.display = 'none';
+
+  }else{
+    eth_address_invalid.style.display = 'block';
+  }
+}
+
 function validate_eth_address(){
   var eth_address = document.getElementById("eth_address")
-  var eth_address_invalid = document.getElementById("eth_address_invalid")
 
   try{
     inputs_valid.eth = isValidAddress(eth_address.value);
@@ -91,13 +103,7 @@ function validate_eth_address(){
     inputs_valid.eth = false;
   }
 
-  if(inputs_valid.eth){
-    eth_address_invalid.style.display = 'none';
-
-  }else{
-    eth_address_invalid.style.display = 'block';
-  }
-
+  toggle_eth_address_error();
   toggle_sign();
 }
 
@@ -119,6 +125,7 @@ function wire_up_create_eth_address(){
   ipcRenderer.on("eth_secret_saved", (event) => {
     address.value = wallet.getAddressString();
     inputs_valid.eth = true;
+    toggle_eth_address_error();
     toggle_sign();
   })
 
