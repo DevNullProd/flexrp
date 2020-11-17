@@ -145,7 +145,7 @@ async function sign_tx(api, instructions){
   const xrp_addr = offline_api.deriveAddress(offline_api.deriveKeypair(xrp_secret.value).publicKey)
 
   // Eth address to message key
-  const message_key = '02' + (new Array(25).join("0")) + eth_address.value.substr(2)
+  const message_key = ('02' + (new Array(25).join("0")) + eth_address.value.substr(2)).toUpperCase()
 
   // Create AccountSet transaction, setting the message key, and sign
   const prepared = await api.prepareSettings(xrp_addr, {messageKey: message_key}, instructions)
@@ -159,7 +159,7 @@ async function process_tx(settings){
       sequence : settings.sequence,
       maxLedgerVersion : settings.maxLedgerVersion
     }
-    const signed = await sign_tx(offline_api)
+    const signed = await sign_tx(offline_api, instructions)
     // .. display signed tx
 
   }else{
