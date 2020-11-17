@@ -124,6 +124,14 @@ ipcMain.on('show_eth_secret', (event, secret) => {
   })
 })
 
+ipcMain.on('show_signed_tx', (event, signed) => {
+  dialog.showMessageBox(main_win, {
+    message : "Signed Transaction: " + signed + ". Must be submitted to take effect.",
+    checkboxLabel : "I have copied this transaction for subsequent submission.",
+    buttons : ["OK"]
+  })
+})
+
 ///
 
 app.whenReady().then(createMain)

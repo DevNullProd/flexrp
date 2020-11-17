@@ -160,7 +160,7 @@ async function process_tx(settings){
       maxLedgerVersion : settings.maxLedgerVersion
     }
     const signed = await sign_tx(offline_api, instructions)
-    // .. display signed tx
+    ipcRenderer.send("show_signed_tx", signed.signedTransaction)
 
   }else{
     const signed = await sign_tx(await online_api(settings), {})
