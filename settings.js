@@ -2,6 +2,14 @@ const {ipcRenderer} = require('electron')
 
 ///
 
+function is_int(n){
+  return Number(n) === n && n % 1 === 0;
+}
+
+function is_float(n){
+  return Number(n) === n && n % 1 !== 0;
+}
+
 function wire_up_testnet(){
   var testnet = document.getElementById("testnet");
   testnet.addEventListener("change",function(e){
@@ -39,10 +47,11 @@ function wire_up_fee(){
   var error = document.getElementById("fee_invalid")
 
   fee.addEventListener("input",function(e){
-    const is_valid = Number.isInteger(parseInt(fee.value));
+    const value = fee.value;
+    const is_valid = is_int(parseInt(value)) || is_float(parseFloat(value));
     if(is_valid){
       error.style.display = "none";
-      ipcRenderer.send('set_setting', {fee : fee.value});
+      ipcRenderer.send('set_setting', {fee : value});
 
     }else{
       error.style.display = "block";
@@ -55,10 +64,11 @@ function wire_up_sequence(){
   var error = document.getElementById("sequence_invalid");
 
   sequence.addEventListener("input",function(e){
-    const is_valid = Number.isInteger(parseInt(sequence.value));
+    const value = parseInt(sequence.value)
+    const is_valid = is_int(value);
     if(is_valid){
       error.style.display = "none";
-      ipcRenderer.send('set_setting', {sequence : sequence.value});
+      ipcRenderer.send('set_setting', {sequence : value});
 
     }else{
       error.style.display = "block";
@@ -71,10 +81,11 @@ function wire_up_max_ledger_version(){
   var error = document.getElementById("sequence_invalid");
 
   max_ledger_version.addEventListener("input",function(e){
-    const is_valid = Number.isInteger(parseInt(max_ledger_version.value))
+    const value = parseInt(max_ledger_version.value);
+    const is_valid = is_int(value);
     if(is_valid){
       error.style.display = "none";
-      ipcRenderer.send('set_setting', {max_ledger_version : max_ledger_version.value});
+      ipcRenderer.send('set_setting', {max_ledger_version : value});
 
     }else{
       error.style.display = "block";
