@@ -7,7 +7,29 @@ const {
 
 ///
 
-var main_win, help_win, settings_win;
+const SIZES = {
+  main : {
+    width : 800,
+    height : 600
+  },
+
+  initial_alert : {
+    width : 300,
+    height: 100
+  },
+
+  help : {
+    width: 400,
+    height : 600
+  },
+
+  settings : {
+    width : 500,
+    height : 300
+  }
+}
+
+var main_win, settings_win;
 var settings = {
   testnet : false,
   offline : false,
@@ -18,8 +40,8 @@ var settings = {
 
 function createMain () {
   main_win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width:  SIZES.main.width,
+    height: SIZES.main.height,
     title : "Flare / XRP Setup",
     webPreferences: {
       nodeIntegration: true
@@ -44,23 +66,34 @@ app.on('activate', () => {
 
 ///
 
-ipcMain.on('initial_alert', (event) => { 
-  dialog.showMessageBox(main_win, {
-    type : "warning",
-    message : "This app requires access to your private XRP secret key",
-    checkboxLabel : "I am running this on a secure computer",
-    buttons : ["OK"]
+ipcMain.on('quit_app', (event) => {
+  app.quit()
+})
 
-  }).then((result) => {
-    if(!result.checkboxChecked)
-      app.quit()
+ipcMain.on('close_window', (event) => {
+  BrowserWindow.getFocusedWindow().close()
+})
+
+ipcMain.on('initial_alert', (event) => {
+  const alert_win = new BrowserWindow({
+    width: SIZES.initial_alert.width,
+    height: SIZES.initial_alert.height,
+    frame : false,
+    parent : main_win,
+    modal : true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
+
+  alert_win.setMenu(null)
+  alert_win.loadFile('initial_alert.html')
 })
 
 ipcMain.on('show_help', (event) => { 
-  help_win = new BrowserWindow({
-    width: 400,
-    height: 600,
+  const help_win = new BrowserWindow({
+    width: SIZES.help.width,
+    height: SIZES.help.height,
     parent : main_win,
     modal : true,
     title : "Flare / XRP Setup Help",
@@ -75,8 +108,8 @@ ipcMain.on('show_help', (event) => {
 
 ipcMain.on('show_settings', (event) => { 
   settings_win = new BrowserWindow({
-    width: 500,
-    height: 300,
+    width: SIZES.settings.width,
+    height: SIZES.settings.height,
     parent : main_win,
     modal : true,
     title : "Flare / XRP Setup Settings",

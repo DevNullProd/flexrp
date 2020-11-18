@@ -1,0 +1,42 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="./dialog.js"></script>
+    <script type="text/javascript">
+      const {app, ipcRenderer} = require('electron')
+
+      document.addEventListener("DOMContentLoaded", function(){
+        show_dialog({
+          buttons : [{
+            text : "CANCEL",
+            id : "cancel"
+          },{
+            text : "OK",
+            id : "ok",
+            disabled : true
+          }]
+        });
+
+        const ok = document.getElementById("ok")
+        ok.addEventListener("click", function(){
+          ipcRenderer.send("close_window")
+        })
+
+        const secure = document.getElementById("secure")
+        secure.addEventListener("change", function() {
+          ok.disabled = !this.checked;
+        }, false);
+
+        const cancel = document.getElementById("cancel");
+        cancel.addEventListener("click", function() {
+          ipcRenderer.send("quit_app")
+        }, false)
+      });
+    </script>
+</head>
+
+<body>
+  <label for="secure">I am running this on a secure computer</label>
+  <input type="checkbox" id="secure" />
+</body>
+</html>
