@@ -3,13 +3,13 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="./dialog.js"></script>
     <script type="text/javascript">
-      const {app, ipcRenderer} = require('electron')
+      const {ipcRenderer} = require('electron')
 
       document.addEventListener("DOMContentLoaded", function(){
         show_dialog({
           buttons : [{
-            text : "CANCEL",
-            id : "cancel"
+            text : "QUIT",
+            id : "quit"
           },{
             text : "OK",
             id : "ok",
@@ -27,8 +27,8 @@
           ok.disabled = !this.checked;
         }, false);
 
-        const cancel = document.getElementById("cancel");
-        cancel.addEventListener("click", function() {
+        const quit = document.getElementById("quit");
+        quit.addEventListener("click", function() {
           ipcRenderer.send("quit_app")
         }, false)
       });
@@ -36,6 +36,7 @@
 </head>
 
 <body>
+  <h1 style="text-align: center">This application requires access to your XRP Secret Key</h1>
   <label for="secure">I am running this on a secure computer</label>
   <input type="checkbox" id="secure" />
 </body>

@@ -1,0 +1,43 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="./dialog.js"></script>
+    <script type="text/javascript">
+      const {ipcRenderer} = require('electron')
+
+      document.addEventListener("DOMContentLoaded", function(){
+        show_dialog({
+          buttons : [{
+            text : "CANCEL",
+            id : "cancel"
+          },{
+            text : "OK",
+            id : "ok"
+          }]
+        });
+
+        const ok = document.getElementById("ok")
+        ok.addEventListener("click", function(){
+          ipcRenderer.send("generate_eth_account")
+          ipcRenderer.send("show_eth_secret")
+          ipcRenderer.send("close_window")
+        })
+
+        const cancel = document.getElementById("cancel");
+        cancel.addEventListener("click", function() {
+          ipcRenderer.send("close_window")
+        }, false)
+      });
+    </script>
+</head>
+
+<body>
+  <ul style="list-style-type: none">
+    <li>This will generate a new ETH account.</li>
+    <li>The secret will be displayed on the screen</li>
+    <li>&nbsp;&nbsp;<b>MAKE SURE TO SAVE IT!</b></li>
+    <li>The address will replace the existing one.</li>
+    <li>Do you wish to continue?</li>
+  </ul>
+</body>
+</html>

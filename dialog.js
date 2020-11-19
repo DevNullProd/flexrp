@@ -26,5 +26,6 @@ function show_dialog(options){
   }
 
   var body = document.getElementsByTagName("body")[0];
+  body.style['padding-top'] = '15px'
   body.appendChild(container);
 }

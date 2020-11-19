@@ -3,7 +3,6 @@ const {ipcRenderer} = require('electron')
 const RippleAPI = require('ripple-lib').RippleAPI;
 const offline_api = new RippleAPI();
 
-const EthWallet = require('ethereumjs-wallet').default;
 const { isValidAddress } = require('ethereumjs-util')
 
 var inputs_valid = {xrp : false, eth : false};
@@ -117,15 +116,9 @@ function wire_up_eth_address(){
 }
 
 function wire_up_create_eth_address(){
-  const wallet = EthWallet.generate();
-
-  ipcRenderer.on("generate_eth_confirmed", () => {
-    ipcRenderer.send("show_eth_secret", wallet.getPrivateKeyString());
-  })
-
   var address = document.getElementById("eth_address")
-  ipcRenderer.on("eth_secret_saved", (event) => {
-    address.value = wallet.getAddressString();
+  ipcRenderer.on("update_eth_address", (event, eth_address) => {
+    address.value = eth_address;
     inputs_valid.eth = true;
     toggle_eth_address_error();
     toggle_sign();

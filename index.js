@@ -14,8 +14,18 @@ const SIZES = {
   },
 
   initial_alert : {
-    width : 300,
-    height: 100
+    width : 500,
+    height: 200
+  },
+
+  generate_eth : {
+    width : 400,
+    height: 200
+  },
+
+  eth_secret : {
+    width : 400,
+    height: 225
   },
 
   help : {
@@ -30,12 +40,19 @@ const SIZES = {
 }
 
 var main_win, settings_win;
+
 var settings = {
   testnet : false,
   offline : false,
   fee : null,
   sequence : null,
   maxLedgerVersion : null
+};
+
+var eth_account = {
+  persist : false,
+  address : null,
+  secret : null
 };
 
 function createMain () {
@@ -74,6 +91,8 @@ ipcMain.on('close_window', (event) => {
   BrowserWindow.getFocusedWindow().close()
 })
 
+///
+
 ipcMain.on('initial_alert', (event) => {
   const alert_win = new BrowserWindow({
     width: SIZES.initial_alert.width,
@@ -106,6 +125,8 @@ ipcMain.on('show_help', (event) => {
   help_win.loadFile('help.html')
 })
 
+///
+
 ipcMain.on('show_settings', (event) => { 
   settings_win = new BrowserWindow({
     width: SIZES.settings.width,
@@ -134,27 +155,59 @@ ipcMain.on('set_setting', (event, setting) => {
   Object.assign(settings, setting)
 })
 
-ipcMain.on('confirm_generate_eth', (event) => {
-  dialog.showMessageBox(main_win, {
-    message : "This will generate an ETH secret key and display it on the screen. Do you wish to continue?",
-    buttons : ["CANCEL", "OK"]
+///
 
-  }).then((result) => {
-    if(result.response == 1) // OK clicked
-      event.reply("generate_eth_confirmed")
+ipcMain.on('confirm_generate_eth', (event) => {
+  const generated_eth = new BrowserWindow({
+    width: SIZES.generate_eth.width,
+    height: SIZES.generate_eth.height,
+    frame : false,
+    parent : main_win,
+    modal : true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
+
+  generated_eth.setMenu(null)
+  generated_eth.loadFile('generate_eth.html')
 })
 
-ipcMain.on('show_eth_secret', (event, secret) => {
-  dialog.showMessageBox(main_win, {
-    message : "This is your ETH secret. Once you close this dialog it will dissapear forever. MAKE SURE TO SAVE IT: " + secret,
-    checkboxLabel : "I have saved this ETH secret",
-    buttons : ["CANCEL", "OK"]
+ipcMain.on('generate_eth_account', (event) => {
+  const EthWallet = require('ethereumjs-wallet').default;
+  const wallet = EthWallet.generate();
+  eth_account.persist = false;
+  eth_account.address = wallet.getAddressString();
+  eth_account.secret = wallet.getPrivateKeyString();
+})
 
-  }).then((result) => {
-    if(result.response == 1 && result.checkboxChecked)
-      event.reply("eth_secret_saved")
+ipcMain.on("get_eth_account", (event) => {
+  event.reply("got_eth_account", eth_account)
+})
+
+ipcMain.on('show_eth_secret', (event) => {
+  const eth_secret = new BrowserWindow({
+    width: SIZES.eth_secret.width,
+    height: SIZES.eth_secret.height,
+    frame : false,
+    parent : main_win,
+    modal : true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
+
+  eth_secret.on("closed", (event) => {
+    if(eth_account.persist)
+      main_win.webContents.send("update_eth_address", eth_account.address)
+  });
+
+  eth_secret.setMenu(null)
+  eth_secret.loadFile('eth_secret.html')
+})
+
+ipcMain.on("persist_eth_account", (event) => {
+  eth_account.persist = true;
 })
 
 ipcMain.on('show_signed_tx', (event, signed) => {
