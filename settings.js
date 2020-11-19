@@ -2,6 +2,12 @@ const {ipcRenderer} = require('electron')
 
 ///
 
+var inputs_valid = {
+  fee : false,
+  sequence : false,
+  max_ledger_version : false
+}
+
 function is_int(n){
   return Number(n) === n && n % 1 === 0;
 }
@@ -26,59 +32,85 @@ function wire_up_offline(){
   offline.addEventListener("change",function(e){
     reset_offline_settings();
     toggle_offline_settings();
+    toggle_close();
     ipcRenderer.send('set_setting', {offline : this.checked});
   },false);
 }
 
-function wire_up_fee(){
+function validate_fee(){
   var fee = document.getElementById("fee");
   var error = document.getElementById("fee_invalid")
 
-  fee.addEventListener("input",function(e){
-    const value = fee.value;
-    const float_value = parseFloat(value)
-    const is_valid = is_int(float_value) || is_float(float_value);
-    if(is_valid){
-      error.style.display = "none";
-      ipcRenderer.send('set_setting', {fee : value});
+  const value = fee.value;
+  const float_value = parseFloat(value)
+  inputs_valid.fee = is_int(float_value) || is_float(float_value);
 
-    }else{
-      error.style.display = "block";
-    }
+  if(inputs_valid.fee){
+    error.style.display = "none";
+    ipcRenderer.send('set_setting', {fee : value});
+
+  }else{
+    error.style.display = "block";
+  }
+
+  toggle_close();
+}
+
+function wire_up_fee(){
+  var fee = document.getElementById("fee");
+  fee.addEventListener("input",function(e){
+    validate_fee();
   },false);
+}
+
+function validate_sequence(){
+  var sequence = document.getElementById("sequence");
+  var error = document.getElementById("sequence_invalid");
+
+  const float_value = parseFloat(sequence.value)
+  inputs_valid.sequence = is_int(float_value) && !is_float(float_value);
+
+  if(inputs_valid.sequence){
+    error.style.display = "none";
+    ipcRenderer.send('set_setting', {sequence : float_value});
+
+  }else{
+    error.style.display = "block";
+  }
+
+  toggle_close();
 }
 
 function wire_up_sequence(){
   var sequence = document.getElementById("sequence");
-  var error = document.getElementById("sequence_invalid");
-
   sequence.addEventListener("input",function(e){
-    const float_value = parseFloat(sequence.value)
-    const is_valid = is_int(float_value) && !is_float(float_value);
-    if(is_valid){
-      error.style.display = "none";
-      ipcRenderer.send('set_setting', {sequence : float_value});
-
-    }else{
-      error.style.display = "block";
-    }
+    validate_sequence();
   },false);
+}
+
+function validate_max_ledger_version(){
+  var max_ledger_version = document.getElementById("max_ledger_version");
+  var error = document.getElementById("max_ledger_version_invalid");
+
+  const float_value = parseFloat(max_ledger_version.value);
+  inputs_valid.max_ledger_version = is_int(float_value) && !is_float(float_value);
+
+  if(inputs_valid.max_ledger_version){
+    error.style.display = "none";
+    ipcRenderer.send('set_setting', {max_ledger_version : float_value});
+
+  }else{
+    error.style.display = "block";
+  }
+
+  toggle_close();
 }
 
 function wire_up_max_ledger_version(){
   var max_ledger_version = document.getElementById("max_ledger_version");
-  var error = document.getElementById("sequence_invalid");
 
   max_ledger_version.addEventListener("input",function(e){
-    const float_value = parseFloat(max_ledger_version.value);
-    const is_valid = is_int(float_value) && !is_float(float_value);
-    if(is_valid){
-      error.style.display = "none";
-      ipcRenderer.send('set_setting', {max_ledger_version : float_value});
-
-    }else{
-      error.style.display = "block";
-    }
+    validate_max_ledger_version();
   },false);
 }
 
@@ -87,6 +119,16 @@ function wire_up_close(){
   close.addEventListener("click",function(e){
     ipcRenderer.send('close_window');
   },false);
+}
+
+function toggle_close(){
+  var offline = document.getElementById("offline");
+
+  var close = document.getElementById("close");
+  close.disabled =  offline.checked &&
+                 !(inputs_valid.fee &&
+              inputs_valid.sequence &&
+       inputs_valid.max_ledger_version);
 }
 
 function wire_up_controls(){
