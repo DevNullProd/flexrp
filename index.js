@@ -74,7 +74,7 @@ function createMain () {
     }
   })
 
-  //main_win.setMenu(null)
+  main_win.setMenu(null)
   main_win.loadFile('main.html')
 }
 
