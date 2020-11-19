@@ -34,7 +34,7 @@ const SIZES = {
   },
 
   help : {
-    width: 400,
+    width: 600,
     height : 600
   },
 
