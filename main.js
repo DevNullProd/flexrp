@@ -146,20 +146,28 @@ async function sign_tx(api, instructions){
 }
 
 async function process_tx(settings){
+  var loader = document.getElementById("loader");
+
   if(settings.offline){
     const instructions = {
       fee : settings.fee,
       sequence : settings.sequence,
       maxLedgerVersion : settings.maxLedgerVersion
     }
+
     const signed = await sign_tx(offline_api, instructions)
-    ipcRenderer.send("show_signed_tx", signed.signedTransaction)
+    ipcRenderer.send("set_signed_tx", signed.signedTransaction);
+    ipcRenderer.send("show_signed_tx");
+
+    loader.style.display = 'none';
 
   }else{
     const api = await online_api(settings)
     const signed = await sign_tx(api, {})
     await api.submit(signed.signedTransaction);
     ipcRenderer.send("submit_success")
+
+    loader.style.display = 'none';
   }
 }
 

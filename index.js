@@ -24,8 +24,13 @@ const SIZES = {
   },
 
   eth_secret : {
-    width : 400,
-    height: 225
+    width : 575,
+    height: 275
+  },
+
+  signed_tx : {
+    width : 425,
+    height: 400 
   },
 
   help : {
@@ -54,6 +59,10 @@ var eth_account = {
   address : null,
   secret : null
 };
+
+var signed_tx = null;
+
+///
 
 function createMain () {
   main_win = new BrowserWindow({
@@ -210,12 +219,30 @@ ipcMain.on("persist_eth_account", (event) => {
   eth_account.persist = true;
 })
 
+///
+
+ipcMain.on('set_signed_tx', (event, signed) => {
+  signed_tx = signed;
+})
+
+ipcMain.on('get_signed_tx', (event) => {
+  event.reply('got_signed_tx', signed_tx)
+})
+
 ipcMain.on('show_signed_tx', (event, signed) => {
-  dialog.showMessageBox(main_win, {
-    message : "Signed Transaction: " + signed + ". Must be submitted to take effect.",
-    checkboxLabel : "I have copied this transaction for subsequent submission.",
-    buttons : ["OK"]
+  const signed_tx = new BrowserWindow({
+    width: SIZES.signed_tx.width,
+    height: SIZES.signed_tx.height,
+    frame : false,
+    parent : main_win,
+    modal : true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
+
+  //signed_tx.setMenu(null)
+  signed_tx.loadFile('signed_tx.html')
 })
 
 ipcMain.on("submit_success", (event) => {

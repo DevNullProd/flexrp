@@ -1,0 +1,20 @@
+#signed_tx_container{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#signed_tx{
+  word-break: break-word;
+  background-color: black;
+  color: white;
+  padding: 5px;
+}
+
+#copy{
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+  cursor: pointer;
+}

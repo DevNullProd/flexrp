@@ -1,0 +1,64 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="signed_tx.css" />
+    <script type="text/javascript" src="./dialog.js"></script>
+    <script type="text/javascript">
+      const {ipcRenderer} = require('electron')
+
+      document.addEventListener("DOMContentLoaded", function(){
+        show_dialog({
+          buttons : [{
+            text : "OK",
+            id : "ok",
+            disabled : true
+          }]
+        });
+
+        var _signed_tx;
+        const signed_tx = document.getElementById("signed_tx")
+        ipcRenderer.on("got_signed_tx", (event, tx) => {
+          _signed_tx = tx;
+
+          var text = document.createTextNode(tx);
+          signed_tx.appendChild(text)
+        })
+        ipcRenderer.send("get_signed_tx")
+
+        const ok = document.getElementById("ok")
+        ok.addEventListener("click", function(){
+          ipcRenderer.send("close_window")
+        })
+
+        const copied = document.getElementById("copied")
+        copied.addEventListener("change", function() {
+          ok.disabled = !this.checked;
+        }, false);
+
+        const copy = document.getElementById("copy");
+        copy.addEventListener("click", function(){
+          navigator.clipboard.writeText(_signed_tx)
+                   .then(function(){
+                     alert("Copied!")
+                   }).catch(function(){
+                     alert("Problem Copying TX")
+                   })
+        })
+      });
+    </script>
+</head>
+
+<body>
+  <h2>Signed Transaction:</h2>
+
+  <div id="signed_tx_container">
+    <div id="signed_tx"></div>
+    <img id="copy" title="Copy" src="assets/copy.svg" />
+  </div>
+
+  <h3>Must be independently submitted to take effect.</h3>
+
+  <label for="copied">I have copied this transaction for subsequent submission.</label>
+  <input type="checkbox" id="copied" />
+</body>
+</html>
