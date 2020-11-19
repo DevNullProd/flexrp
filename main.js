@@ -155,20 +155,40 @@ async function process_tx(settings){
       maxLedgerVersion : settings.maxLedgerVersion
     }
 
-    const signed = await sign_tx(offline_api, instructions)
-    ipcRenderer.send("set_signed_tx", signed.signedTransaction);
-    ipcRenderer.send("show_signed_tx");
+    var signed;
+    var error = null
+    try{
+      signed = await sign_tx(offline_api, instructions)
+    }catch(err){
+      error = err
+    }
 
-    loader.style.display = 'none';
+    if(error){
+      ipcRenderer.send("sign_failed", error);
+
+    }else{
+      ipcRenderer.send("set_signed_tx", signed.signedTransaction);
+      ipcRenderer.send("show_signed_tx");
+    }
 
   }else{
     const api = await online_api(settings)
-    const signed = await sign_tx(api, {})
-    await api.submit(signed.signedTransaction);
-    ipcRenderer.send("submit_success")
 
-    loader.style.display = 'none';
+    var error = null
+    try{
+      const signed = await sign_tx(api, {})
+      await api.submit(signed.signedTransaction);
+    }catch(err){
+      error = err
+    }
+
+    if(error)
+      ipcRenderer.send("submit_failed", error)
+    else
+      ipcRenderer.send("submit_success")
   }
+
+  loader.style.display = 'none';
 }
 
 function wire_up_submit(){

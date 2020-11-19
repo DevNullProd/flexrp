@@ -219,6 +219,15 @@ ipcMain.on("persist_eth_account", (event) => {
 
 ///
 
+ipcMain.on('sign_failed', (event, err) => {
+  dialog.showMessageBox(main_win, {
+    message : "Falure signing TX: " + err.message,
+    buttons : ["OK"]
+  }).then((result) => {
+    app.quit()
+  })
+})
+
 ipcMain.on('set_signed_tx', (event, signed) => {
   signed_tx = signed;
 })
@@ -246,6 +255,15 @@ ipcMain.on('show_signed_tx', (event, signed) => {
 ipcMain.on("submit_success", (event) => {
   dialog.showMessageBox(main_win, {
     message : "Successfully submitted TX. You XRP account has been setup to receive Flare Spark tokens.",
+    buttons : ["OK"]
+  }).then((result) => {
+    app.quit()
+  })
+})
+
+ipcMain.on("submit_failed", (event, err) => {
+  dialog.showMessageBox(main_win, {
+    message : "Falure submitting TX: " + err.message,
     buttons : ["OK"]
   }).then((result) => {
     app.quit()
