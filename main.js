@@ -22,9 +22,9 @@ async function online_api(settings){
 
 ///
 
-function toggle_sign(){
-  var sign = document.getElementById("sign");
-  sign.disabled = !inputs_valid.xrp || !inputs_valid.eth;
+function toggle_submit(){
+  var submit = document.getElementById("submit");
+  submit.disabled = !inputs_valid.xrp || !inputs_valid.eth;
 }
 
 function wire_up_settings(){
@@ -57,7 +57,7 @@ function validate_xrp_secret(){
 
   inputs_valid.xrp = offline_api.isValidSecret(xrp_secret.value)
   toggle_xrp_secret_error();
-  toggle_sign();
+  toggle_submit();
 }
 
 function wire_up_xrp_secret(){
@@ -105,7 +105,7 @@ function validate_eth_address(){
   }
 
   toggle_eth_address_error();
-  toggle_sign();
+  toggle_submit();
 }
 
 function wire_up_eth_address(){
@@ -121,7 +121,7 @@ function wire_up_create_eth_address(){
     address.value = eth_address;
     inputs_valid.eth = true;
     toggle_eth_address_error();
-    toggle_sign();
+    toggle_submit();
   })
 
   var create = document.getElementById("create_eth_address");
@@ -171,12 +171,12 @@ async function process_tx(settings){
   }
 }
 
-function wire_up_sign(){
+function wire_up_submit(){
   var loader = document.getElementById("loader");
-  var sign = document.getElementById("sign");
-  sign.addEventListener("click",function(e){
+  var submit = document.getElementById("submit");
+  submit.addEventListener("click",function(e){
     loader.style.display = 'block';
-    sign.style.display = 'none';
+    submit.style.display = 'none';
     ipcRenderer.on("got_settings", (event, settings) => {
       process_tx(settings);
     })
@@ -191,7 +191,7 @@ function wire_up_controls(){
   wire_up_toggle_xrp_secret();
   wire_up_eth_address();
   wire_up_create_eth_address();
-  wire_up_sign();
+  wire_up_submit();
 }
 
 function show_initial_alert(){

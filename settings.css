@@ -4,6 +4,10 @@
   flex-direction: column;
 }
 
+h1{
+  text-align: center;
+}
+
 #testnet_container{
   display: flex;
   justify-content: space-between;
@@ -42,6 +46,6 @@
 }
 
 #close_container{
-  padding: 25px;
+  padding-top: 25px;
   text-align: center;
 }

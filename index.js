@@ -35,16 +35,16 @@ const SIZES = {
 
   help : {
     width: 600,
-    height : 600
+    height : 625
   },
 
   settings : {
     width : 500,
-    height : 300
+    height : 250
   }
 }
 
-var main_win, settings_win;
+var main_win;
 
 var settings = {
   testnet : false,
@@ -122,6 +122,7 @@ ipcMain.on('show_help', (event) => {
   const help_win = new BrowserWindow({
     width: SIZES.help.width,
     height: SIZES.help.height,
+    frame : false,
     parent : main_win,
     modal : true,
     title : "Flare / XRP Setup Help",
@@ -137,9 +138,10 @@ ipcMain.on('show_help', (event) => {
 ///
 
 ipcMain.on('show_settings', (event) => { 
-  settings_win = new BrowserWindow({
+  const settings_win = new BrowserWindow({
     width: SIZES.settings.width,
     height: SIZES.settings.height,
+    frame : false,
     parent : main_win,
     modal : true,
     title : "Flare / XRP Setup Settings",
@@ -150,10 +152,6 @@ ipcMain.on('show_settings', (event) => {
 
   settings_win.setMenu(null)
   settings_win.loadFile('settings.html')
-})
-
-ipcMain.on('close_settings', (event) => { 
-  settings_win.close();
 })
 
 ipcMain.on('get_settings', (event) => {
@@ -241,7 +239,7 @@ ipcMain.on('show_signed_tx', (event, signed) => {
     }
   })
 
-  //signed_tx.setMenu(null)
+  signed_tx.setMenu(null)
   signed_tx.loadFile('signed_tx.html')
 })
 

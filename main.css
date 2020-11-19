@@ -111,11 +111,11 @@ html, body{
   cursor: pointer;
 }
 
-#sign_container{
+#submit_container{
   text-align: center;
 }
 
-#sign{
+#submit{
   margin-top: 15px;
 }
 

@@ -25,20 +25,8 @@ function wire_up_offline(){
   var offline = document.getElementById("offline");
   offline.addEventListener("change",function(e){
     reset_offline_settings();
-
-    const offline_enabled = this.checked;
-    if(offline_enabled){
-      fee_container.style.display                = 'flex';
-      sequence_container.style.display           = 'flex';
-      max_ledger_version_container.style.display = 'flex';
-
-    }else{
-      fee_container.style.display                = 'none';
-      sequence_container.style.display           = 'none';
-      max_ledger_version_container.style.display = 'none';
-    }
-
-    ipcRenderer.send('set_setting', {offline : offline_enabled});
+    toggle_offline_settings();
+    ipcRenderer.send('set_setting', {offline : this.checked});
   },false);
 }
 
@@ -97,7 +85,7 @@ function wire_up_max_ledger_version(){
 function wire_up_close(){
   var close = document.getElementById("close");
   close.addEventListener("click",function(e){
-    ipcRenderer.send('close_settings');
+    ipcRenderer.send('close_window');
   },false);
 }
 
@@ -132,6 +120,21 @@ function reset_offline_settings(){
   max_ledger_version_error.style.display = 'none';
 }
 
+function toggle_offline_settings(){
+  var offline = document.getElementById("offline");
+  const offline_enabled = offline.checked;
+  if(offline_enabled){
+    fee_container.style.display                = 'flex';
+    sequence_container.style.display           = 'flex';
+    max_ledger_version_container.style.display = 'flex';
+
+  }else{
+    fee_container.style.display                = 'none';
+    sequence_container.style.display           = 'none';
+    max_ledger_version_container.style.display = 'none';
+  }
+}
+
 function restore_settings(){
   var offline            = document.getElementById("offline");
   var testnet            = document.getElementById("testnet");
@@ -140,11 +143,12 @@ function restore_settings(){
   var max_ledger_version = document.getElementById("max_ledger_version");
 
   ipcRenderer.on("got_settings", (event, settings) => {
-    offline.checked    = settings.offline;
-    testnet.checked    = settings.testnet;
-    fee                = settings.fee;
-    sequence           = settings.sequence;
-    max_ledger_version = settings.max_ledger_version;
+    offline.checked          = settings.offline;
+    testnet.checked          = settings.testnet;
+    fee.value                = settings.fee;
+    sequence.value           = settings.sequence;
+    max_ledger_version.value = settings.max_ledger_version;
+    toggle_offline_settings();
   })
 
   ipcRenderer.send("get_settings")
