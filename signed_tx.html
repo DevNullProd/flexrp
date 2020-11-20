@@ -1,3 +1,4 @@
+<!-- Render signed transaction -->
 <html>
 <head>
     <meta charset="UTF-8">
@@ -15,6 +16,7 @@
           }]
         });
 
+        // Retrieve signed tx, setting it on the page
         var _signed_tx;
         const signed_tx = document.getElementById("signed_tx")
         ipcRenderer.on("got_signed_tx", (event, tx) => {
@@ -25,16 +27,19 @@
         })
         ipcRenderer.send("get_signed_tx")
 
+        // Close window on "ok" button
         const ok = document.getElementById("ok")
         ok.addEventListener("click", function(){
           ipcRenderer.send("close_window")
         })
 
+        // Only allow 'ok' is user confirmed copy
         const copied = document.getElementById("copied")
         copied.addEventListener("change", function() {
           ok.disabled = !this.checked;
         }, false);
 
+        // Copy tx to clipboard on command
         const copy = document.getElementById("copy");
         copy.addEventListener("click", function(){
           navigator.clipboard.writeText(_signed_tx)

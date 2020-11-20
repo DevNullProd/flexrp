@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<!-- Main application window, contains:
+     - settings control
+     - help control
+     - xrp secret input (and show/hide button)
+     - ethereum address input (and generation control)
+     - submit button
+-->
 <html>
 <head>
     <meta charset="UTF-8">
@@ -13,11 +19,13 @@
       This app requires access to your private XRP secret key:<br/><b>ONLY RUN IT IN A SECURE ENVIRONMENT</b>
     </div>
 
+    <!-- settings and help control -->
     <div id="controls">
       <img id="settings" src="./assets/settings.svg" title="Settings" />
       <img id="help"     src="./assets/help.svg"     title="Help" />
     </div>
 
+    <!-- xrp secret input, error, and visibility toggle -->
     <div id="xrp_secret_container">
       <h2>XRP Secret Key:</h2>
 
@@ -37,6 +45,7 @@
       </div>
     </div>
 
+    <!-- eth address input, error, and generator control -->
     <div id="eth_address_container">
       <h2>ETH Address:</h2>
 
@@ -55,6 +64,7 @@
       </div>
     </div>
 
+    <!-- form submit control -->
     <div id="submit_container">
       <input id="submit" type="button" value="Submit" disabled />
     </div>

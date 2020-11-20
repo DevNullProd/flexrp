@@ -7,6 +7,7 @@ const {
 
 ///
 
+// Default window sizes
 const SIZES = {
   main : {
     width : 800,
@@ -46,6 +47,7 @@ const SIZES = {
 
 var main_win;
 
+// Global application settings
 var settings = {
   testnet : false,
   offline : false,
@@ -54,16 +56,19 @@ var settings = {
   maxLedgerVersion : null
 };
 
+// Generated ethereum account
 var eth_account = {
   persist : false,
   address : null,
   secret : null
 };
 
+// Signed transaction
 var signed_tx = null;
 
 ///
 
+// Create main window
 function createMain () {
   main_win = new BrowserWindow({
     width:  SIZES.main.width,
@@ -78,12 +83,14 @@ function createMain () {
   main_win.loadFile('main.html')
 }
 
+// Quit application when all windows are closed
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
 
+// Create main window on app activation
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createMain()
@@ -92,16 +99,19 @@ app.on('activate', () => {
 
 ///
 
+// Quit application IPC command
 ipcMain.on('quit_app', (event) => {
   app.quit()
 })
 
+// Close current window IPC command
 ipcMain.on('close_window', (event) => {
   BrowserWindow.getFocusedWindow().close()
 })
 
 ///
 
+// Render initial_alert window
 ipcMain.on('initial_alert', (event) => {
   const alert_win = new BrowserWindow({
     width: SIZES.initial_alert.width,
@@ -118,6 +128,7 @@ ipcMain.on('initial_alert', (event) => {
   alert_win.loadFile('initial_alert.html')
 })
 
+// Render show_help window
 ipcMain.on('show_help', (event) => { 
   const help_win = new BrowserWindow({
     width: SIZES.help.width,
@@ -137,6 +148,7 @@ ipcMain.on('show_help', (event) => {
 
 ///
 
+// Render show_settings window
 ipcMain.on('show_settings', (event) => { 
   const settings_win = new BrowserWindow({
     width: SIZES.settings.width,
@@ -154,16 +166,20 @@ ipcMain.on('show_settings', (event) => {
   settings_win.loadFile('settings.html')
 })
 
+// Retrieve application settings,
+// invokes 'got_settings' method with settings
 ipcMain.on('get_settings', (event) => {
   event.reply('got_settings', settings)
 })
 
+// Set an application setting
 ipcMain.on('set_setting', (event, setting) => { 
   Object.assign(settings, setting)
 })
 
 ///
 
+// Render confirm eth address generation window
 ipcMain.on('confirm_generate_eth', (event) => {
   const generated_eth = new BrowserWindow({
     width: SIZES.generate_eth.width,
@@ -180,16 +196,20 @@ ipcMain.on('confirm_generate_eth', (event) => {
   generated_eth.loadFile('generate_eth.html')
 })
 
+// Set generated eth account
 ipcMain.on('set_eth_account', (event, addr, priv) => {
   eth_account.persist = false;
   eth_account.address = addr;
   eth_account.secret  = priv;
 })
 
+// Retrieve generated ethereum account,
+// invokes 'got_eth_account' method with account
 ipcMain.on("get_eth_account", (event) => {
   event.reply("got_eth_account", eth_account)
 })
 
+// Render ethereum secret window
 ipcMain.on('show_eth_secret', (event) => {
   const eth_secret = new BrowserWindow({
     width: SIZES.eth_secret.width,
@@ -202,6 +222,7 @@ ipcMain.on('show_eth_secret', (event) => {
     }
   })
 
+  // When window is closed, update eth address in main window (if persisting)
   eth_secret.on("closed", (event) => {
     if(eth_account.persist)
       main_win.webContents.send("update_eth_address", eth_account.address)
@@ -211,12 +232,14 @@ ipcMain.on('show_eth_secret', (event) => {
   eth_secret.loadFile('eth_secret.html')
 })
 
+// Mark eth account as to be persisted
 ipcMain.on("persist_eth_account", (event) => {
   eth_account.persist = true;
 })
 
 ///
 
+// Render dialog indicating tx signing failed
 ipcMain.on('sign_failed', (event, err) => {
   dialog.showMessageBox(main_win, {
     message : "Falure signing TX: " + err.message,
@@ -226,14 +249,18 @@ ipcMain.on('sign_failed', (event, err) => {
   })
 })
 
+// Set signed transaction
 ipcMain.on('set_signed_tx', (event, signed) => {
   signed_tx = signed;
 })
 
+// Retrieve signed transaction,
+// invoked 'got_signed_tx' with signed tx
 ipcMain.on('get_signed_tx', (event) => {
   event.reply('got_signed_tx', signed_tx)
 })
 
+// Render signed tx window
 ipcMain.on('show_signed_tx', (event, signed) => {
   const signed_tx = new BrowserWindow({
     width: SIZES.signed_tx.width,
@@ -250,6 +277,9 @@ ipcMain.on('show_signed_tx', (event, signed) => {
   signed_tx.loadFile('signed_tx.html')
 })
 
+///
+
+// Render dialog indicating tx submission succeeded
 ipcMain.on("submit_success", (event) => {
   dialog.showMessageBox(main_win, {
     message : "Successfully submitted TX. You XRP account has been setup to receive Flare Spark tokens.",
@@ -259,6 +289,7 @@ ipcMain.on("submit_success", (event) => {
   })
 })
 
+// Render dialog indicating tx submission failed
 ipcMain.on("submit_failed", (event, err) => {
   dialog.showMessageBox(main_win, {
     message : "Falure submitting TX: " + err.message,
@@ -270,4 +301,5 @@ ipcMain.on("submit_failed", (event, err) => {
 
 ///
 
+// Create main window when application is ready
 app.whenReady().then(createMain)

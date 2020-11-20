@@ -1,3 +1,5 @@
+<!-- Initial alert dialog prompting user to confirm application is being
+     run on a secure system-->
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,16 +19,19 @@
           }]
         });
 
+        // Close dialog on 'ok' button click
         const ok = document.getElementById("ok")
         ok.addEventListener("click", function(){
           ipcRenderer.send("close_window")
         })
 
+        // Disable ok button based on state of 'secure' checkbox
         const secure = document.getElementById("secure")
         secure.addEventListener("change", function() {
           ok.disabled = !this.checked;
         }, false);
 
+        // Quit app when 'quit' button clicked
         const quit = document.getElementById("quit");
         quit.addEventListener("click", function() {
           ipcRenderer.send("quit_app")

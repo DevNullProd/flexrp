@@ -2,20 +2,24 @@ const {ipcRenderer} = require('electron')
 
 ///
 
+// Tracks validity of inputs
 var inputs_valid = {
   fee : false,
   sequence : false,
   max_ledger_version : false
 }
 
+// Return boolean indicating if input is an integer
 function is_int(n){
   return Number(n) === n && n % 1 === 0;
 }
 
+// Return boolean indicating if input is a float
 function is_float(n){
   return Number(n) === n && n % 1 !== 0;
 }
 
+// Set testnet setting
 function wire_up_testnet(){
   var testnet = document.getElementById("testnet");
   testnet.addEventListener("change",function(e){
@@ -23,6 +27,7 @@ function wire_up_testnet(){
   },false);
 }
 
+// Set offline setting, updating related controls / visibility
 function wire_up_offline(){
   var fee_container = document.getElementById("fee_container");
   var sequence_container = document.getElementById("sequence_container");
@@ -37,6 +42,7 @@ function wire_up_offline(){
   },false);
 }
 
+// Validate fee input format
 function validate_fee(){
   var fee = document.getElementById("fee");
   var error = document.getElementById("fee_invalid")
@@ -56,6 +62,7 @@ function validate_fee(){
   toggle_close();
 }
 
+// Wireup fee input textbox
 function wire_up_fee(){
   var fee = document.getElementById("fee");
   fee.addEventListener("input",function(e){
@@ -63,6 +70,7 @@ function wire_up_fee(){
   },false);
 }
 
+// Validate sequence input format
 function validate_sequence(){
   var sequence = document.getElementById("sequence");
   var error = document.getElementById("sequence_invalid");
@@ -81,6 +89,7 @@ function validate_sequence(){
   toggle_close();
 }
 
+// Wireup sequence input textbox
 function wire_up_sequence(){
   var sequence = document.getElementById("sequence");
   sequence.addEventListener("input",function(e){
@@ -88,6 +97,7 @@ function wire_up_sequence(){
   },false);
 }
 
+// Validate max ledger version input format
 function validate_max_ledger_version(){
   var max_ledger_version = document.getElementById("max_ledger_version");
   var error = document.getElementById("max_ledger_version_invalid");
@@ -106,6 +116,7 @@ function validate_max_ledger_version(){
   toggle_close();
 }
 
+// Wireup max ledger version input textbox
 function wire_up_max_ledger_version(){
   var max_ledger_version = document.getElementById("max_ledger_version");
 
@@ -114,6 +125,7 @@ function wire_up_max_ledger_version(){
   },false);
 }
 
+// Close window on button click
 function wire_up_close(){
   var close = document.getElementById("close");
   close.addEventListener("click",function(e){
@@ -121,6 +133,7 @@ function wire_up_close(){
   },false);
 }
 
+// Disable close button if inputs are not valid
 function toggle_close(){
   var offline = document.getElementById("offline");
 
@@ -131,6 +144,7 @@ function toggle_close(){
        inputs_valid.max_ledger_version);
 }
 
+// Wireup all controls
 function wire_up_controls(){
   wire_up_testnet();
   wire_up_offline();
@@ -140,6 +154,7 @@ function wire_up_controls(){
   wire_up_close();
 }
 
+// Reset offline settings to initial state
 function reset_offline_settings(){
   ipcRenderer.send('set_setting', {fee                : null});
   ipcRenderer.send('set_setting', {sequence           : null});
@@ -162,6 +177,7 @@ function reset_offline_settings(){
   max_ledger_version_error.style.display = 'none';
 }
 
+// Toggle offline settings visibility based on offline input state
 function toggle_offline_settings(){
   var offline = document.getElementById("offline");
   const offline_enabled = offline.checked;
@@ -177,6 +193,7 @@ function toggle_offline_settings(){
   }
 }
 
+// Restore all settings inputs from global settings
 function restore_settings(){
   var offline            = document.getElementById("offline");
   var testnet            = document.getElementById("testnet");
@@ -184,6 +201,7 @@ function restore_settings(){
   var sequence           = document.getElementById("sequence");
   var max_ledger_version = document.getElementById("max_ledger_version");
 
+  // Retrieve global settings
   ipcRenderer.on("got_settings", (event, settings) => {
     offline.checked          = settings.offline;
     testnet.checked          = settings.testnet;
@@ -196,6 +214,7 @@ function restore_settings(){
   ipcRenderer.send("get_settings")
 }
 
+// Wireup controls and restore settings on dom content being loaded
 function dom_content_loaded(){
   wire_up_controls();
   restore_settings();
