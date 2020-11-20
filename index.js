@@ -180,12 +180,10 @@ ipcMain.on('confirm_generate_eth', (event) => {
   generated_eth.loadFile('generate_eth.html')
 })
 
-ipcMain.on('generate_eth_account', (event) => {
-  const EthWallet = require('ethereumjs-wallet').default;
-  const wallet = EthWallet.generate();
+ipcMain.on('set_eth_account', (event, addr, priv) => {
   eth_account.persist = false;
-  eth_account.address = wallet.getAddressString();
-  eth_account.secret = wallet.getPrivateKeyString();
+  eth_account.address = addr;
+  eth_account.secret  = priv;
 })
 
 ipcMain.on("get_eth_account", (event) => {
