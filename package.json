@@ -5,12 +5,29 @@
   "main": "index.js",
   "author": "Dev Null Productions <devnullproductions@gmail.com>",
   "license": "MIT",
+  "build": {
+    "appId": "flexrp.devnullprod.com",
+    "mac": {
+      "category": "public.app-category.finance"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm"
+      ]
+    }
+  },
   "dependencies": {
-    "electron": "^10.1.5",
     "ethereumjs-wallet": "^1.0.1",
     "ripple-lib": "^1.8.2"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^11.0.2",
+    "electron-builder": "^22.9.1"
   }
 }
