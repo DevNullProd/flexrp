@@ -89,7 +89,7 @@ Read more about these options [here](https://xrpl.org/rippleapi-reference.html#t
 
 Flexrp is based on [electronjs](https://www.electronjs.org/). You will need to install [nodejs](https://nodejs.org/en/) and the [yarn](https://yarnpkg.com/) package manager to run it (outside the scope of this documentation.)
 
-After checking out this project from github, run the **yarn** command to install dependencies followed by **yarnstart** to start the application.
+After checking out this project from github, run the **yarn** command to install dependencies followed by **yarn start** to start the application.
 
 ## Legaleeze
 
