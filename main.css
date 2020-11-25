@@ -82,6 +82,35 @@ html, body{
   display: none;
 }
 
+#xrp_address_container{
+  padding: 5px;
+  flex-basis: 15%;
+  display: none;
+}
+
+#xrp_address_subcontainer{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#xrp_address_wrapper{
+  flex-basis: 90%;
+}
+
+#xrp_address{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#xrp_address_invalid{
+  display: none;
+}
+
+#xrp_address_placeholder{
+  width: 25px;
+  height: 25px;
+}
+
 #eth_address_container{
   padding: 5px;
   flex-basis: 15%;

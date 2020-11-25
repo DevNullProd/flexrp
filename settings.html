@@ -23,7 +23,9 @@
       <input type="checkbox" id="offline" />
     </div>
 
-    <!-- The following settings only apply in offline mode (required to be set) -->
+    <!-- The following three settings
+         (fee, sequence, max_ledger_verison)
+         only apply in offline mode (required to be set) -->
 
     <!-- Fee to set for transaction -->
     <div id="fee_container">
@@ -59,6 +61,13 @@
       <div id="max_ledger_version_invalid">
         Max Ledger Version is invalid
       </div>
+    </div>
+
+    <!-- Specify account to be setup
+         (different than one corresponding to keypair signing transaction) -->
+    <div id="specify_account_container">
+      <label for="specify_account">Specify XRP Account to setup</label>
+      <input type="checkbox" id="specify_account" />
     </div>
 
     <!-- Close settings (disabled if settings are invalid) -->

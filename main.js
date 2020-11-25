@@ -5,7 +5,11 @@ const offline_api = new RippleAPI();
 
 const { isValidAddress } = require('ethereumjs-util')
 
-var inputs_valid = {xrp : false, eth : false};
+var inputs_valid = {
+  xrp_secret  : false,
+  xrp_address : true,
+  eth_address : false
+};
 
 // Create new online API handle from settings
 var _online_api;
@@ -26,11 +30,36 @@ async function online_api(settings){
 // Enable / disable submit button based on xrp and eth input validity
 function toggle_submit(){
   var submit = document.getElementById("submit");
-  submit.disabled = !inputs_valid.xrp || !inputs_valid.eth;
+  submit.disabled = !inputs_valid.xrp_secret  ||
+                    !inputs_valid.xrp_address ||
+                    !inputs_valid.eth_address;
+}
+
+// Toggle xrp_address visibility based on specify_account setting
+function toggle_xrp_address(specify_account){
+  var container = document.getElementById("xrp_address_container");
+  var xrp_address = document.getElementById("xrp_address");
+
+  if(specify_account){
+    container.style.display = 'block';
+    xrp_address.value = null;
+    inputs_valid.xrp_address = false;
+
+  }else{
+    container.style.display = 'none';
+    inputs_valid.xrp_address = true;
+  }
+
+  toggle_submit();
 }
 
 // Show settings form on button click
 function wire_up_settings(){
+  // Update state of UI on settings
+  ipcRenderer.on("settings_updated", (event, settings) => {
+    toggle_xrp_address(settings.specify_account)
+  })
+
   var settings = document.getElementById("settings");
   settings.addEventListener("click",function(e){
     ipcRenderer.send('show_settings');
@@ -49,7 +78,7 @@ function wire_up_help(){
 function toggle_xrp_secret_error(){
   var xrp_secret_invalid = document.getElementById("xrp_secret_invalid")
 
-  if(inputs_valid.xrp){
+  if(inputs_valid.xrp_secret){
     xrp_secret_invalid.style.display = 'none';
 
   }else{
@@ -61,7 +90,7 @@ function toggle_xrp_secret_error(){
 function validate_xrp_secret(){
   var xrp_secret = document.getElementById("xrp_secret");
 
-  inputs_valid.xrp = offline_api.isValidSecret(xrp_secret.value)
+  inputs_valid.xrp_secret = offline_api.isValidSecret(xrp_secret.value)
   toggle_xrp_secret_error();
   toggle_submit();
 }
@@ -93,10 +122,39 @@ function wire_up_toggle_xrp_secret(){
   },false);
 }
 
+// Toggle xrp address error visibilty based on input validity
+function toggle_xrp_address_error(){
+  var xrp_address_invalid = document.getElementById("xrp_address_invalid")
+
+  if(inputs_valid.xrp_address){
+    xrp_address_invalid.style.display = 'none';
+
+  }else{
+    xrp_address_invalid.style.display = 'block';
+  }
+}
+
+// Validate xrp address input format
+function validate_xrp_address(){
+  var xrp_address = document.getElementById("xrp_address");
+
+  inputs_valid.xrp_address = offline_api.isValidAddress(xrp_address.value)
+  toggle_xrp_address_error();
+  toggle_submit();
+}
+
+// Validate xrp address on input
+function wire_up_xrp_address(){
+  var xrp_address = document.getElementById("xrp_address");
+  xrp_address.addEventListener("input",function(e){
+    validate_xrp_address();
+  },false);
+}
+
 // Toggle eth address error visibilty based on input validity
 function toggle_eth_address_error(){
   var eth_address_invalid = document.getElementById("eth_address_invalid")
-  if(inputs_valid.eth){
+  if(inputs_valid.eth_address){
     eth_address_invalid.style.display = 'none';
 
   }else{
@@ -109,9 +167,9 @@ function validate_eth_address(){
   var eth_address = document.getElementById("eth_address")
 
   try{
-    inputs_valid.eth = isValidAddress(eth_address.value);
+    inputs_valid.eth_address = isValidAddress(eth_address.value);
   }catch(err){
-    inputs_valid.eth = false;
+    inputs_valid.eth_address = false;
   }
 
   toggle_eth_address_error();
@@ -132,7 +190,7 @@ function wire_up_create_eth_address(){
   var address = document.getElementById("eth_address")
   ipcRenderer.on("update_eth_address", (event, eth_address) => {
     address.value = eth_address;
-    inputs_valid.eth = true;
+    inputs_valid.eth_address = true;
     toggle_eth_address_error();
     toggle_submit();
   })
@@ -144,12 +202,21 @@ function wire_up_create_eth_address(){
 }
 
 // Sign transaction using input values and settings
-async function sign_tx(api, instructions){
+async function sign_tx(api, settings){
   var xrp_secret = document.getElementById("xrp_secret");
+  var xrp_address = document.getElementById("xrp_address");
   var eth_address = document.getElementById("eth_address")
 
-  // Secret to public address
-  const xrp_addr = offline_api.deriveAddress(offline_api.deriveKeypair(xrp_secret.value).publicKey)
+  const instructions = settings.offline ? {
+    fee : settings.fee,
+    sequence : settings.sequence,
+    maxLedgerVersion : settings.maxLedgerVersion
+  } : {};
+
+  // Specified xrp address or convert secret to public address
+  const xrp_addr = settings.specify_account ?
+    xrp_address.value :
+    offline_api.deriveAddress(offline_api.deriveKeypair(xrp_secret.value).publicKey);
 
   // Eth address to message key
   const message_key = ('02' + (new Array(25).join("0")) + eth_address.value.substr(2)).toUpperCase()
@@ -166,16 +233,10 @@ async function process_tx(settings){
   var loader = document.getElementById("loader");
 
   if(settings.offline){
-    const instructions = {
-      fee : settings.fee,
-      sequence : settings.sequence,
-      maxLedgerVersion : settings.maxLedgerVersion
-    }
-
     var signed;
     var error = null
     try{
-      signed = await sign_tx(offline_api, instructions)
+      signed = await sign_tx(offline_api, settings)
     }catch(err){
       error = err
     }
@@ -193,7 +254,7 @@ async function process_tx(settings){
 
     var error = null
     try{
-      const signed = await sign_tx(api, {})
+      const signed = await sign_tx(api, settings)
       await api.submit(signed.signedTransaction);
     }catch(err){
       error = err
@@ -228,6 +289,7 @@ function wire_up_controls(){
   wire_up_help();
   wire_up_xrp_secret();
   wire_up_toggle_xrp_secret();
+  wire_up_xrp_address();
   wire_up_eth_address();
   wire_up_create_eth_address();
   wire_up_submit();

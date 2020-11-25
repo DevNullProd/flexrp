@@ -53,7 +53,8 @@ var settings = {
   offline : false,
   fee : null,
   sequence : null,
-  maxLedgerVersion : null
+  maxLedgerVersion : null,
+  specify_account : false
 };
 
 // Generated ethereum account
@@ -161,6 +162,12 @@ ipcMain.on('show_settings', (event) => {
       nodeIntegration: true
     }
   })
+
+  // When window is closed, update settings in main window
+  settings_win.on("closed", (event) => {
+    main_win.webContents.send("settings_updated", settings);
+  });
+
 
   settings_win.setMenu(null)
   settings_win.loadFile('settings.html')

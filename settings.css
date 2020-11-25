@@ -45,6 +45,11 @@ h1{
   display: none;
 }
 
+#specify_account_container{
+  display: flex;
+  justify-content: space-between;
+}
+
 #close_container{
   padding-top: 25px;
   text-align: center;

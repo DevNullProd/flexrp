@@ -144,6 +144,14 @@ function toggle_close(){
        inputs_valid.max_ledger_version);
 }
 
+// Set specify_account setting
+function wire_up_specify_account(){
+  var specify_account = document.getElementById("specify_account");
+  specify_account.addEventListener("change",function(e){
+    ipcRenderer.send('set_setting', {specify_account : this.checked});
+  },false);
+}
+
 // Wireup all controls
 function wire_up_controls(){
   wire_up_testnet();
@@ -151,6 +159,7 @@ function wire_up_controls(){
   wire_up_fee();
   wire_up_sequence();
   wire_up_max_ledger_version();
+  wire_up_specify_account();
   wire_up_close();
 }
 
@@ -200,6 +209,7 @@ function restore_settings(){
   var fee                = document.getElementById("fee");
   var sequence           = document.getElementById("sequence");
   var max_ledger_version = document.getElementById("max_ledger_version");
+  var specify_account    = document.getElementById("specify_account");
 
   // Retrieve global settings
   ipcRenderer.on("got_settings", (event, settings) => {
@@ -208,6 +218,7 @@ function restore_settings(){
     fee.value                = settings.fee;
     sequence.value           = settings.sequence;
     max_ledger_version.value = settings.max_ledger_version;
+    specify_account.checked  = settings.specify_account;
     toggle_offline_settings();
   })
 
