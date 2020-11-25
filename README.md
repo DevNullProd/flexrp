@@ -75,6 +75,8 @@ Application settings can be configured by clicking the gears icons in the upper 
 
 - **Offline mode** - Flexrp will **not** connect to any XRP server and instead simply generate and sign a transaction for subsequent submission to the network. **YOU MUST INDEPENDENTLY SUBMIT THE PRODUCED TRANSACTION TO RECEIVE FLARE TOKENS**.
 
+- **Specify XRP Account to setup** - Allows you to explicitly set the XRP account to setup if different than the one corresponding to the secret key (which will be used to sign the transaction). Useful for the case where you are using a *RegularKeyPair* to sign transactions (see [this](https://xrpl.org/assign-a-regular-key-pair.html) for more info).
+
 When in offline mode, you will be required to configure a few more parameters to successfully be able to generate a XRP transaction. These are:
 
 - **Fee** - the amount of XRP to pay in fees
