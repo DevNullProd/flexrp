@@ -83,6 +83,12 @@ When in offline mode, you will be required to configure a few more parameters to
 
 Read more about these options [here](https://xrpl.org/rippleapi-reference.html#transaction-instructions).
 
+## Running from source
+
+Flexrp is based on [electronjs](https://www.electronjs.org/). You will need to install [nodejs](https://nodejs.org/en/) and the [yarn](https://yarnpkg.com/) package manager to run it (outside the scope of this documentation.)
+
+After checking out this project from github, run the **yarn** command to install dependencies followed by **yarnstart** to start the application.
+
 ## Legaleeze
 
 This application provides with no warranties or guarantees pertaining to functionality or use. Make sure you know what you are doing and the risks involved with managing cryptocurrencies before using this application. By using this application you agree to absolve Dev Null Productions of any liabilities that may arise.
