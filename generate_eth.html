@@ -26,8 +26,8 @@
           ipcRenderer.send("set_eth_account",
                            wallet.getAddressString(),
                            wallet.getPrivateKeyString())
-          ipcRenderer.send("show_eth_secret")
           ipcRenderer.send("close_window")
+          ipcRenderer.send("show_eth_secret")
         })
 
         // Just close window on cancel
