@@ -66,6 +66,14 @@ function wire_up_settings(){
   },false);
 }
 
+// Show security window on banner click
+function wire_up_security(){
+  var security = document.getElementById("security");
+  security.addEventListener("click",function(e){
+    ipcRenderer.send('show_security');
+  }, false)
+}
+
 // Show help form on button click
 function wire_up_help(){
   var help = document.getElementById("help");
@@ -286,6 +294,7 @@ function wire_up_submit(){
 // Wire up all controls
 function wire_up_controls(){
   wire_up_settings();
+  wire_up_security();
   wire_up_help();
   wire_up_xrp_secret();
   wire_up_toggle_xrp_secret();

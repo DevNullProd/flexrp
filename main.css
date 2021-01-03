@@ -20,6 +20,7 @@ html, body{
   padding: 5px;
   background-color: red;
   color: white;
+  cursor: pointer;
 }
 
 #security b{

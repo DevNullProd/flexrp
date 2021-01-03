@@ -1,0 +1,9 @@
+#security{
+  height: 100%;
+  flex-direction: column;
+}
+
+#close_container{
+  padding-top: 25px;
+  text-align: center;
+}

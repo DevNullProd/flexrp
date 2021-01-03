@@ -16,7 +16,7 @@ const SIZES = {
 
   initial_alert : {
     width : 500,
-    height: 200
+    height: 250
   },
 
   generate_eth : {
@@ -32,6 +32,11 @@ const SIZES = {
   signed_tx : {
     width : 425,
     height: 400 
+  },
+
+  security : {
+    width: 600,
+    height : 625
   },
 
   help : {
@@ -145,6 +150,24 @@ ipcMain.on('show_help', (event) => {
 
   help_win.setMenu(null)
   help_win.loadFile('help.html')
+})
+
+// Render show_security window
+ipcMain.on('show_security', (event) => {
+  const security_win = new BrowserWindow({
+    width: SIZES.security.width,
+    height: SIZES.security.height,
+    frame : false,
+    parent : main_win,
+    modal : true,
+    title : "Securing your system",
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+
+  security_win.setMenu(null)
+  security_win.loadFile('security.html')
 })
 
 ///
