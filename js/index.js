@@ -86,7 +86,7 @@ function createMain () {
   })
 
   main_win.setMenu(null)
-  main_win.loadFile('main.html')
+  main_win.loadFile('html/main.html')
 }
 
 // Quit application when all windows are closed
@@ -131,7 +131,7 @@ ipcMain.on('initial_alert', (event) => {
   })
 
   alert_win.setMenu(null)
-  alert_win.loadFile('initial_alert.html')
+  alert_win.loadFile('html/initial_alert.html')
 })
 
 // Render show_help window
@@ -149,7 +149,7 @@ ipcMain.on('show_help', (event) => {
   })
 
   help_win.setMenu(null)
-  help_win.loadFile('help.html')
+  help_win.loadFile('html/help.html')
 })
 
 // Render show_security window
@@ -167,7 +167,7 @@ ipcMain.on('show_security', (event) => {
   })
 
   security_win.setMenu(null)
-  security_win.loadFile('security.html')
+  security_win.loadFile('html/security.html')
 })
 
 ///
@@ -193,7 +193,7 @@ ipcMain.on('show_settings', (event) => {
 
 
   settings_win.setMenu(null)
-  settings_win.loadFile('settings.html')
+  settings_win.loadFile('html/settings.html')
 })
 
 // Retrieve application settings,
@@ -223,7 +223,7 @@ ipcMain.on('confirm_generate_eth', (event) => {
   })
 
   generated_eth.setMenu(null)
-  generated_eth.loadFile('generate_eth.html')
+  generated_eth.loadFile('html/generate_eth.html')
 })
 
 // Set generated eth account
@@ -259,7 +259,7 @@ ipcMain.on('show_eth_secret', (event) => {
   });
 
   eth_secret.setMenu(null)
-  eth_secret.loadFile('eth_secret.html')
+  eth_secret.loadFile('html/eth_secret.html')
 })
 
 // Mark eth account as to be persisted
@@ -304,7 +304,7 @@ ipcMain.on('show_signed_tx', (event, signed) => {
   })
 
   signed_tx.setMenu(null)
-  signed_tx.loadFile('signed_tx.html')
+  signed_tx.loadFile('html/signed_tx.html')
 })
 
 // Signed transaction process complete
