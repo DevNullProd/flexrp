@@ -103,6 +103,14 @@ app.on('activate', () => {
   }
 })
 
+// Electron Security Guideline: Disable Navigation
+// https://www.electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation
+app.on('web-contents-created', (event, contents) => {
+  contents.on('will-navigate', () => {
+    event.preventDefault();
+  })
+})
+
 ///
 
 // Quit application IPC command
