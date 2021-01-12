@@ -81,7 +81,8 @@ function createMain () {
     height: SIZES.main.height,
     title : "Flare / XRP Setup",
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: false
     }
   })
 
@@ -134,7 +135,8 @@ ipcMain.on('initial_alert', (event) => {
     parent : main_win,
     modal : true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: false
     }
   })
 
@@ -152,7 +154,8 @@ ipcMain.on('show_help', (event) => {
     modal : true,
     title : "Flare / XRP Setup Help",
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: false
     }
   })
 
@@ -170,7 +173,8 @@ ipcMain.on('show_security', (event) => {
     modal : true,
     title : "Securing your system",
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: false
     }
   })
 
@@ -190,7 +194,8 @@ ipcMain.on('show_settings', (event) => {
     modal : true,
     title : "Flare / XRP Setup Settings",
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: false
     }
   })
 
@@ -226,7 +231,8 @@ ipcMain.on('confirm_generate_eth', (event) => {
     parent : main_win,
     modal : true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: false
     }
   })
 
@@ -256,7 +262,8 @@ ipcMain.on('show_eth_secret', (event) => {
     parent : main_win,
     modal : true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: false
     }
   })
 
@@ -307,7 +314,8 @@ ipcMain.on('show_signed_tx', (event, signed) => {
     parent : main_win,
     modal : true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: false
     }
   })
 
