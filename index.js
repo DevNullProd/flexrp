@@ -307,6 +307,11 @@ ipcMain.on('show_signed_tx', (event, signed) => {
   signed_tx.loadFile('signed_tx.html')
 })
 
+// Signed transaction process complete
+ipcMain.on("signed_tx_complete", (event) => {
+  app.quit()
+})
+
 ///
 
 // Render dialog indicating tx submission succeeded

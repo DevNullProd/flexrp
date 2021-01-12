@@ -31,6 +31,7 @@
         const ok = document.getElementById("ok")
         ok.addEventListener("click", function(){
           ipcRenderer.send("close_window")
+          ipcRenderer.send("signed_tx_complete")
         })
 
         // Only allow 'ok' is user confirmed copy
