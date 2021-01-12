@@ -3,55 +3,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/initial_alert.css" />
     <script type="text/javascript" src="../js/dialog.js"></script>
-    <script type="text/javascript">
-      const {ipcRenderer} = require('electron')
-
-      document.addEventListener("DOMContentLoaded", function(){
-        show_dialog({
-          buttons : [{
-            text : "QUIT",
-            id : "quit"
-          },{
-            text : "OK",
-            id : "ok",
-            disabled : true
-          }]
-        });
-
-        // Show security guidelines when 'read more' is clicked
-        const read_more = document.getElementById("read_more")
-        read_more.addEventListener("click", function(){
-          ipcRenderer.send("show_security")
-        })
-
-        // Close dialog on 'ok' button click
-        const ok = document.getElementById("ok")
-        ok.addEventListener("click", function(){
-          ipcRenderer.send("close_window")
-        })
-
-        // Disable ok button based on state of 'secure' checkbox
-        const secure = document.getElementById("secure")
-        secure.addEventListener("change", function() {
-          ok.disabled = !this.checked;
-        }, false);
-
-        // Quit app when 'quit' button clicked
-        const quit = document.getElementById("quit");
-        quit.addEventListener("click", function() {
-          ipcRenderer.send("quit_app")
-        }, false)
-      });
-    </script>
+    <script type="text/javascript" src="../js/initial_alert.js"></script>
 </head>
 
 <body>
-  <h1 style="text-align: center">This application requires access to your XRP Secret Key</h1>
+  <h1 id="initial_alert_header">
+    This application requires access to your XRP Secret Key
+  </h1>
   <label for="secure">I am running this on a secure computer</label>
   <input type="checkbox" id="secure" />
 
-  <p id="read_more" style="cursor: pointer; text-decoration: underline">
+  <p id="initial_alert_security">
     Read more about security
   </p>
 </body>
