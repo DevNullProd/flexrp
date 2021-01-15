@@ -1,0 +1,52 @@
+<!-- Splash window, displays informational content and
+     prompts user to confirm application is being run
+     on a secure system
+-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+
+    <link rel="stylesheet" href="../css/splash.css" />
+    <script type="text/javascript" src="../js/splash.js"></script>
+</head>
+
+<body>
+  <div id="splash">
+    <div id="splash_left">
+      <div id="splash_logo">
+        <img src="../assets/app-icon.png" />
+        FleXRP
+      </div>
+
+      <div id="splash_info">
+        <div id="splash_version"></div>
+        <div id="splash_dnp">© 2021 Dev Null Productions</div>
+        <div id="splash_license">MIT LIcense</div>
+      </div>
+    </div>
+
+    <div id="splash_right">
+      <div id="splash_tagline">
+        Set up your XRP account for the Flare Spark token airdrop
+      </div>
+
+      <div id="splash_security">
+        This application requires access to your XRP secret key.
+        Inorder to continue, please confirm you are running this on
+        a secure system and a private network.
+
+        <!-- Clicking this launches the security window -->
+        <span id="splash_security_moreinfo">More Info</span>
+      </div>
+
+      <!-- Clicking Quit exits the application,
+           Clicking confirm launches the main window -->
+      <div id="splash_controls">
+        <button id="splash_quit">Quit</button>
+        <button id="splash_confirm">I confirm</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

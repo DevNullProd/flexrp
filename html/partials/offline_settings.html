@@ -1,0 +1,42 @@
+<div id="_offline_settings_partial">
+  <!-- The following three settings
+       (fee, sequence, max_ledger_verison)
+       only apply in offline mode (required to be set) -->
+
+  <!-- Fee to set for transaction -->
+  <div id="fee_container">
+    <label for="fee">Fee</label>
+    <input type="text" id="fee" />
+  </div>
+
+  <div id="fee_error" class="error">
+    <div id="fee_invalid">
+      Fee is invalid
+    </div>
+  </div>
+
+  <!-- Transaction sequence number -->
+  <div id="sequence_container">
+    <label for="sequence">Sequence</label>
+    <input type="text" id="sequence" />
+  </div>
+
+  <div id="sequence_error" class="error">
+    <div id="sequence_invalid">
+      Sequence is invalid
+    </div>
+  </div>
+
+  <!-- Max ledger version to apply transaction to -->
+  <div id="max_ledger_version_container">
+    <label for="max_ledger_version">Max Ledger Version</label>
+    <input type="text" id="max_ledger_version" />
+  </div>
+
+  <div id="max_ledger_version_error" class="error">
+    <div id="max_ledger_version_invalid">
+      Max Ledger Version is invalid
+    </div>
+  </div>
+
+</div>

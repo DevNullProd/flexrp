@@ -1,9 +1,8 @@
 <!-- Main application window, contains:
-     - settings control
-     - help control
-     - xrp secret input (and show/hide button)
-     - ethereum address input (and generation control)
-     - submit button
+     - navigation partial
+     - main partial
+     - settings partial
+     - help partial
 -->
 <html>
 <head>
@@ -11,88 +10,16 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
 
     <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/common.css" />
+    <script type="text/javascript" src="../js/partials.js"></script>
     <script type="text/javascript" src="../js/main.js"></script>
 </head>
 
 <body>
   <div id="main">
-    <div id="security">
-      This app requires access to your private XRP secret key:<br/><b>ONLY RUN IT IN A SECURE ENVIRONMENT</b>
-    </div>
-
-    <!-- settings and help control -->
-    <div id="controls">
-      <img id="settings" src="../assets/settings.svg" title="Settings" />
-      <img id="help"     src="../assets/help.svg"     title="Help" />
-    </div>
-
-    <!-- xrp secret input, error, and visibility toggle -->
-    <div id="xrp_secret_container">
-      <h2>XRP Secret Key:</h2>
-
-      <div id="xrp_secret_subcontainer">
-        <div id="xrp_secret_wrapper">
-          <input id="xrp_secret" type="password" />
-
-          <div id="xrp_secret_error" class="error">
-            <div id="xrp_secret_invalid">
-              Invalid XRP Secret
-            </div>
-          </div>
-        </div>
-
-        <img id="view_xrp_secret" src="../assets/view.svg" title="Show Secret" />
-        <img id="hide_xrp_secret" src="../assets/hide.svg" title="Hide Secret" />
-      </div>
-    </div>
-
-    <!-- xrp address input, error, and layout placeholder -->
-    <div id="xrp_address_container">
-      <h2>XRP Account:</h2>
-
-      <div id="xrp_address_subcontainer">
-        <div id="xrp_address_wrapper">
-          <input id="xrp_address" type="text" />
-
-          <div id="xrp_address_error" class="error">
-            <div id="xrp_address_invalid">
-              Invalid XRP Address
-            </div>
-          </div>
-        </div>
-
-        <div id="xrp_address_placeholder"></div>
-      </div>
-    </div>
-
-    <!-- eth address input, error, and generator control -->
-    <div id="eth_address_container">
-      <h2>ETH Address:</h2>
-
-      <div id="eth_address_subcontainer">
-        <div id="eth_address_wrapper">
-          <input id="eth_address" type="text" />
-
-          <div id="eth_address_error" class="error">
-            <div id="eth_address_invalid">
-              Invalid ETH Address
-            </div>
-          </div>
-        </div>
-
-        <img id="create_eth_address" src="../assets/plus.svg" title="Create ETH Address" />
-      </div>
-    </div>
-
-    <!-- form submit control -->
-    <div id="submit_container">
-      <input id="submit" type="button" value="Submit" disabled />
-    </div>
-
-    <div id="loader_container">
-      <div id="loader"></div>
-    </div>
+    <div id="navigation_partial"></div>
+    <div id="main_partial"></div>
+    <div id="settings_partial"></div>
+    <div id="info_partial"></div>
   </div>
 </body>
 </html>

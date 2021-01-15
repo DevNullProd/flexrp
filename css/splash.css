@@ -1,0 +1,47 @@
+#splash{
+  display: flex;
+  height: 100%;
+}
+
+#splash_left{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 40%;
+  justify-content: center;
+  padding: 50px;
+}
+
+#splash_right{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#splash_logo{
+  flex-basis: 70%
+}
+
+#splash_logo img{
+  width: 20%;
+}
+
+#splash_tagline{
+  flex-basis: 50%;
+  text-align: center;
+}
+
+#splash_security{
+  flex-basis: 20%;
+  border-top: 1px solid black;
+  padding-top: 10px;
+}
+
+#splash_controls{
+  display: flex;
+  justify-content: space-around;
+}
+
+#splash_security_moreinfo{
+  color: blue;
+  cursor: pointer;
+}

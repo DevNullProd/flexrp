@@ -9,48 +9,38 @@ const {
 
 // Default window sizes
 const SIZES = {
-  main : {
-    width : 800,
+  splash : {
+    width  : 800,
     height : 600
   },
 
-  initial_alert : {
-    width : 500,
-    height: 250
+  main : {
+    width  : 800,
+    height : 600
+  },
+
+  security : {
+    width  : 600,
+    height : 800
   },
 
   generate_eth : {
     width : 400,
-    height: 200
+    height: 600
   },
 
   eth_secret : {
-    width : 575,
-    height: 275
+    width : 675,
+    height: 600
   },
 
   signed_tx : {
     width : 425,
     height: 400 
-  },
-
-  security : {
-    width: 600,
-    height : 625
-  },
-
-  help : {
-    width: 600,
-    height : 625
-  },
-
-  settings : {
-    width : 500,
-    height : 250
   }
 }
 
-var main_win;
+var splash_win, security_win, main_win;
 
 // Global application settings
 var settings = {
@@ -74,21 +64,26 @@ var signed_tx = null;
 
 ///
 
-// Create main window
-function createMain () {
-  main_win = new BrowserWindow({
-    width:  SIZES.main.width,
-    height: SIZES.main.height,
-    title : "Flare / XRP Setup",
+// Create splash window
+function createSplash(){
+  splash_win = new BrowserWindow({
+    width:  SIZES.splash.width,
+    height: SIZES.splash.height,
+    title: "FleXRP",
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false
     }
   })
 
-  main_win.setMenu(null)
-  main_win.loadFile('html/main.html')
+  //splash_win.setMenu(null)
+  splash_win.loadFile('html/splash.html')
 }
+
+// Close splash window IPC command
+ipcMain.on('close_splash', (event) => {
+  splash_win.close()
+})
 
 // Quit application when all windows are closed
 app.on('window-all-closed', () => {
@@ -100,7 +95,7 @@ app.on('window-all-closed', () => {
 // Create main window on app activation
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createMain()
+    createSplash()
   }
 })
 
@@ -119,20 +114,14 @@ ipcMain.on('quit_app', (event) => {
   app.quit()
 })
 
-// Close current window IPC command
-ipcMain.on('close_window', (event) => {
-  BrowserWindow.getFocusedWindow().close()
-})
-
 ///
 
-// Render initial_alert window
-ipcMain.on('initial_alert', (event) => {
-  const alert_win = new BrowserWindow({
-    width: SIZES.initial_alert.width,
-    height: SIZES.initial_alert.height,
-    frame : false,
-    parent : main_win,
+// Render security window
+ipcMain.on("show_security", (event) => {
+  security_win = new BrowserWindow({
+    width:  SIZES.main.width,
+    height: SIZES.main.height,
+    parent: splash_win,
     modal : true,
     webPreferences: {
       nodeIntegration: true,
@@ -140,73 +129,28 @@ ipcMain.on('initial_alert', (event) => {
     }
   })
 
-  alert_win.setMenu(null)
-  alert_win.loadFile('html/initial_alert.html')
-})
-
-// Render show_help window
-ipcMain.on('show_help', (event) => { 
-  const help_win = new BrowserWindow({
-    width: SIZES.help.width,
-    height: SIZES.help.height,
-    frame : false,
-    parent : main_win,
-    modal : true,
-    title : "Flare / XRP Setup Help",
-    webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: false
-    }
-  })
-
-  help_win.setMenu(null)
-  help_win.loadFile('html/help.html')
-})
-
-// Render show_security window
-ipcMain.on('show_security', (event) => {
-  const security_win = new BrowserWindow({
-    width: SIZES.security.width,
-    height: SIZES.security.height,
-    frame : false,
-    parent : main_win,
-    modal : true,
-    title : "Securing your system",
-    webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: false
-    }
-  })
-
-  security_win.setMenu(null)
+  //security_win.setMenu(null)
   security_win.loadFile('html/security.html')
 })
 
-///
+// Close security window IPC command
+ipcMain.on('close_security', (event) => {
+  security_win.close()
+})
 
-// Render show_settings window
-ipcMain.on('show_settings', (event) => { 
-  const settings_win = new BrowserWindow({
-    width: SIZES.settings.width,
-    height: SIZES.settings.height,
-    frame : false,
-    parent : main_win,
-    modal : true,
-    title : "Flare / XRP Setup Settings",
+// Render main window
+ipcMain.on("show_main", (event) => {
+  main_win = new BrowserWindow({
+    width:  SIZES.main.width,
+    height: SIZES.main.height,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false
     }
   })
 
-  // When window is closed, update settings in main window
-  settings_win.on("closed", (event) => {
-    main_win.webContents.send("settings_updated", settings);
-  });
-
-
-  settings_win.setMenu(null)
-  settings_win.loadFile('html/settings.html')
+  //main_win.setMenu(null)
+  main_win.loadFile('html/main.html')
 })
 
 // Retrieve application settings,
@@ -218,6 +162,7 @@ ipcMain.on('get_settings', (event) => {
 // Set an application setting
 ipcMain.on('set_setting', (event, setting) => { 
   Object.assign(settings, setting)
+  main_win.webContents.send("settings_updated", settings);
 })
 
 ///
@@ -353,4 +298,4 @@ ipcMain.on("submit_failed", (event, err) => {
 ///
 
 // Create main window when application is ready
-app.whenReady().then(createMain)
+app.whenReady().then(createSplash)

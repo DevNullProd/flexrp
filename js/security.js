@@ -2,10 +2,14 @@ const {ipcRenderer} = require('electron')
 
 ///
 
+function load_security_partial(){
+  append_partial("security_partial", load_partial("security"));
+}
+
 function wire_up_close(){
   var close = document.getElementById("close");
   close.addEventListener("click",function(e){
-    ipcRenderer.send('close_window');
+    ipcRenderer.send('close_security');
   },false);
 }
 
@@ -13,10 +17,9 @@ function wire_up_controls(){
   wire_up_close();
 }
 
-function dom_content_loaded(){
+function security_dom_content_loaded(){
+  load_security_partial()
   wire_up_controls();
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-  dom_content_loaded();
-});
+document.addEventListener("DOMContentLoaded", security_dom_content_loaded);

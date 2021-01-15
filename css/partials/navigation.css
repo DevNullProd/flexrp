@@ -1,0 +1,9 @@
+#_navigation_partial{
+  display: flex;
+  flex-direction: column;
+}
+
+#_navigation_partial img{
+  width: 100%;
+  cursor: pointer;
+}
