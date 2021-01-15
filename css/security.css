@@ -1,0 +1,13 @@
+#security{
+  padding: 25px;
+}
+
+#security_close{
+  border: 0;
+  margin: 25px auto;
+  background: #0076FF;
+  color: white;
+  padding: 5px 15px;
+  display: block;
+  cursor: pointer;
+}

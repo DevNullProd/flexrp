@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "DMSans";
+  src: url("../fonts/DMSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+body{
+  margin: 0;
+}

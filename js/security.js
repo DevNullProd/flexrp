@@ -7,7 +7,7 @@ function load_security_partial(){
 }
 
 function wire_up_close(){
-  var close = document.getElementById("close");
+  var close = document.getElementById("security_close");
   close.addEventListener("click",function(e){
     ipcRenderer.send('close_security');
   },false);

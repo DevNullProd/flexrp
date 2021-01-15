@@ -1,3 +1,5 @@
+// Splash window dynamic logic
+
 const {ipcRenderer} = require('electron')
 const pkg = require("../package.json")
 

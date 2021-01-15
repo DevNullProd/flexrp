@@ -6,42 +6,85 @@
 #splash_left{
   display: flex;
   flex-direction: column;
-  flex-basis: 40%;
-  justify-content: center;
-  padding: 50px;
+  flex-basis: 60%;
+  padding: 0 25px;
+  background: #F8F8F8;
 }
 
 #splash_right{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding: 0 25px;
 }
 
 #splash_logo{
-  flex-basis: 70%
+  font-family: DMSans;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 100px;
 }
 
 #splash_logo img{
   width: 20%;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+#splash_title{
+  vertical-align: middle;
+}
+
+#splash_info{
+  font-family: Poppins;
+  font-size: 0.8rem;
+  margin-top: auto;
+  margin-bottom: 50px;
 }
 
 #splash_tagline{
-  flex-basis: 50%;
   text-align: center;
+  font-family: Poppins;
+  margin-top: 125px;
 }
 
 #splash_security{
   flex-basis: 20%;
   border-top: 1px solid black;
   padding-top: 10px;
+  font-family: DMSans;
+  font-weight: bold;
+  margin-top: auto;
 }
 
 #splash_controls{
   display: flex;
   justify-content: space-around;
+  margin-bottom: 25px;
 }
 
 #splash_security_moreinfo{
   color: blue;
   cursor: pointer;
+}
+
+#splash_quit{
+  border: 0;
+  background: #F8F8F8;
+  color: #7C7C7C;
+  cursor: pointer;
+  font-family: DMSans;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 5px 25px;
+}
+
+#splash_confirm{
+  border: 0;
+  background: #0076FF;
+  color: white;
+  cursor: pointer;
+  font-family: DMSans;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 5px 15px;
 }

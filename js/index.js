@@ -70,13 +70,14 @@ function createSplash(){
     width:  SIZES.splash.width,
     height: SIZES.splash.height,
     title: "FleXRP",
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false
     }
   })
 
-  //splash_win.setMenu(null)
+  splash_win.setMenu(null)
   splash_win.loadFile('html/splash.html')
 }
 
@@ -119,17 +120,18 @@ ipcMain.on('quit_app', (event) => {
 // Render security window
 ipcMain.on("show_security", (event) => {
   security_win = new BrowserWindow({
-    width:  SIZES.main.width,
-    height: SIZES.main.height,
+    width:  SIZES.security.width,
+    height: SIZES.security.height,
     parent: splash_win,
     modal : true,
+    title: "FleXRP Security",
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false
     }
   })
 
-  //security_win.setMenu(null)
+  security_win.setMenu(null)
   security_win.loadFile('html/security.html')
 })
 
@@ -143,6 +145,8 @@ ipcMain.on("show_main", (event) => {
   main_win = new BrowserWindow({
     width:  SIZES.main.width,
     height: SIZES.main.height,
+    title: "FleXRP",
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false
