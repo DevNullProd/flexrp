@@ -1,3 +1,4 @@
+const {ipcRenderer} = require('electron')
 const { isValidAddress } = require('ethereumjs-util')
 
 // Toggle eth address error visibilty based on input validity
@@ -28,7 +29,15 @@ function validate_eth_address(){
 // Validate eth address on input
 function wire_up_eth_address(){
   var eth_address = document.getElementById("eth_address")
+
+  // Validate if we have the minimum # of characters
   eth_address.addEventListener("input",function(e){
+    if(eth_address.value.length >= 42)
+      validate_eth_address();
+  })
+
+  // Validate when we lose focus
+  eth_address.addEventListener("blur",function(e){
     validate_eth_address();
   })
 }
@@ -46,6 +55,11 @@ function wire_up_create_eth_address(){
 
   var create = document.getElementById("create_eth_address");
   create.addEventListener("click",function(e){
-    ipcRenderer.send('confirm_generate_eth');
+    ipcRenderer.send('show_generate_eth');
   },false);
+}
+
+function eth_address_partial_loaded(){
+  wire_up_eth_address();
+  wire_up_create_eth_address();
 }

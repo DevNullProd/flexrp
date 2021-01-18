@@ -1,7 +1,24 @@
+<!-- Control allowing user to select which network
+     to connect to
+-->
 <div id="_network_selector_partial">
-  <!-- Connect to testnet (vs mainnet) -->
-  <div id="testnet_container">
-    <label for="testnet">Connect to testnet</label>
-    <input type="checkbox" id="testnet" />
+  <h2>Networks</h2>
+
+  <div id="networks">
+    <div id="mainnet" class="network active">
+      <h3>Mainnet</h3>
+
+      <p>
+      The production XRP Ledger peer-to-peer network.
+      </p>
+    </div>
+
+    <div id="testnet" class="network">
+      <h3>Testnet</h3>
+
+      <p>
+      A alternate network that acts as a testing ground for software being built on the XRP Ledger, without impacting the mainnet or risking real money.
+      </p>
+    </div>
   </div>
 </div>

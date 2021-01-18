@@ -1,0 +1,38 @@
+#offline_settings_partial{
+  display: none;
+  padding: 25px;
+}
+
+.offline_settings_header{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+
+.offline_settings_help{
+  font-family: Poppins;
+  font-size: 0.7rem;
+  color: #7D7C7C;
+}
+
+#offline_settings_partial label{
+  font-family: DMSans;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+#offline_settings_partial input{
+  width: 100%;
+}
+
+#offline_settings_info{
+  font-family: Poppins;
+  font-size: 0.9rem;
+}
+
+#fee_invalid,
+#sequence_invalid,
+#max_ledger_version_invalid{
+  display: none;
+}

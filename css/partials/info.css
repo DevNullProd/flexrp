@@ -1,0 +1,35 @@
+#_info_partial{
+  padding: 25px;
+  font-family: Poppins;
+}
+
+._info_partial_header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+._info_partial_title{
+  font-family: DMSans;
+  font-weight: bold;
+  color: white;
+}
+
+#_info_partial_security,
+#_info_partial_legalese{
+  margin-top: 50px;
+}
+
+#_info_partial_about_header{
+  background: #0076FF;
+}
+
+#_info_partial_security_header{
+  background: #E87161;
+}
+
+#_info_partial_legalese_header{
+  background: #0076FF;
+}

@@ -21,7 +21,7 @@ function toggle_submit(){
 // Wire up submit button click: retrieve settings and process transaction
 function wire_up_submit(){
   var loader = document.getElementById("loader");
-  var submit = document.getElementById("submit");
+  var submit = document.getElementById("_main_partial_submit");
   submit.addEventListener("click",function(e){
     loader.style.display = 'block';
     submit.style.display = 'none';
@@ -30,6 +30,9 @@ function wire_up_submit(){
     })
     ipcRenderer.send("get_settings")
   })
+}
+
+function wire_up_clear(){
 }
 
 function wire_up_controls(){

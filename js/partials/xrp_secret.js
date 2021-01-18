@@ -45,3 +45,6 @@ function wire_up_toggle_xrp_secret(){
     secret.type = 'password';
   },false);
 }
+
+function xrp_secret_loaded(){
+}

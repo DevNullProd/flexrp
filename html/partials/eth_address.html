@@ -4,19 +4,18 @@
      - error
 -->
 <div id="_eth_address_partial">
-  <h2>ETH Address:</h2>
+  <div id="eth_address_container">
+    <h3>ETH Address:</h3>
 
-  <div id="eth_address_subcontainer">
-    <div id="eth_address_wrapper">
-      <input id="eth_address" type="text" />
+    <button id="create_eth_address">
+      <img src="../assets/Icon-plus.svg" />
+      New
+    </button>
+  </div>
 
-      <div id="eth_address_error" class="error">
-        <div id="eth_address_invalid">
-          Invalid ETH Address
-        </div>
-      </div>
-    </div>
+  <input id="eth_address" type="text" />
 
-    <img id="create_eth_address" src="../assets/plus.svg" title="Create ETH Address" />
+  <div id="eth_address_invalid" class="error">
+    Invalid ETH Address
   </div>
 </div>

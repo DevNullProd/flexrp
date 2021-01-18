@@ -1,9 +1,39 @@
 #_navigation_partial{
   display: flex;
   flex-direction: column;
+  background: #F8F8F8;
+  height: 100%;
 }
 
-#_navigation_partial img{
-  width: 100%;
+._navigation_icon{
+  width: 50%;
   cursor: pointer;
+  margin: 0 auto;
+}
+
+._navigation_indicator{
+  width: 6px;
+  height: 6px;
+  margin: 0 auto;
+  border-radius: 3px;
+}
+
+._navigation_indicator.active{
+  background: #0076FF;
+}
+
+#_navigation_logo{
+  width: 100%;
+}
+
+#_navigation_home{
+  margin-top: 25px;
+}
+
+#_navigation_settings{
+  margin-top: 50px;
+}
+
+#_navigation_info{
+  margin-top: 200px;
 }

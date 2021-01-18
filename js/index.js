@@ -25,13 +25,13 @@ const SIZES = {
   },
 
   generate_eth : {
-    width : 400,
-    height: 600
+    width : 314,
+    height: 380
   },
 
   eth_secret : {
-    width : 675,
-    height: 600
+    width : 690,
+    height: 380
   },
 
   signed_tx : {
@@ -40,7 +40,11 @@ const SIZES = {
   }
 }
 
-var splash_win, security_win, main_win;
+// Window handles
+var splash_win,
+    security_win,
+    main_win,
+    generate_eth;
 
 // Global application settings
 var settings = {
@@ -172,21 +176,27 @@ ipcMain.on('set_setting', (event, setting) => {
 ///
 
 // Render confirm eth address generation window
-ipcMain.on('confirm_generate_eth', (event) => {
-  const generated_eth = new BrowserWindow({
+ipcMain.on('show_generate_eth', (event) => {
+  generate_eth = new BrowserWindow({
     width: SIZES.generate_eth.width,
     height: SIZES.generate_eth.height,
     frame : false,
     parent : main_win,
     modal : true,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false
     }
   })
 
-  generated_eth.setMenu(null)
-  generated_eth.loadFile('html/generate_eth.html')
+  generate_eth.setMenu(null)
+  generate_eth.loadFile('html/generate_eth.html')
+})
+
+// Close security window IPC command
+ipcMain.on('close_generate_eth', (event) => {
+  generate_eth.close()
 })
 
 // Set generated eth account
@@ -204,7 +214,7 @@ ipcMain.on("get_eth_account", (event) => {
 
 // Render ethereum secret window
 ipcMain.on('show_eth_secret', (event) => {
-  const eth_secret = new BrowserWindow({
+  eth_secret = new BrowserWindow({
     width: SIZES.eth_secret.width,
     height: SIZES.eth_secret.height,
     frame : false,
@@ -222,8 +232,13 @@ ipcMain.on('show_eth_secret', (event) => {
       main_win.webContents.send("update_eth_address", eth_account.address)
   });
 
-  eth_secret.setMenu(null)
+  //eth_secret.setMenu(null)
   eth_secret.loadFile('html/eth_secret.html')
+})
+
+// Close security window IPC command
+ipcMain.on('close_eth_secret', (event) => {
+  eth_secret.close()
 })
 
 // Mark eth account as to be persisted

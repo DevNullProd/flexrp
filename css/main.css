@@ -1,15 +1,18 @@
 #main{
   display: flex;
+  height: 100%;
 }
 
 #navigation_partial{
-  flex-basis: 5%;
+  flex-basis: 10%;
+  margin-right: 10px;
 }
 
 #main_partial,
 #settings_partial,
 #info_partial{
   flex-basis: 90%;
+  overflow: auto;
 }
 
 #settings_partial,

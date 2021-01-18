@@ -1,21 +1,26 @@
-<!-- Require user to confirm eth account generation -->
+<!-- Require user to confirm ETH account generation -->
 <html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
 
+    <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/generate_eth.css" />
-    <script type="text/javascript" src="../js/dialog.js"></script>
     <script type="text/javascript" src="../js/generate_eth.js"></script>
 </head>
 
 <body>
-  <ul id="generate_eth">
-    <li>This will generate a new ETH account.</li>
-    <li>The secret will be displayed on the screen</li>
-    <li>&nbsp;&nbsp;<b>MAKE SURE TO SAVE IT!</b></li>
-    <li>The address will replace the existing one.</li>
-    <li>Do you wish to continue?</li>
-  </ul>
+  <div id="generate_eth">
+    <h2>Generate a new ETH Account & Secret Key</h2>
+
+    <div id="info">
+      By continuing, a new ETH Secret Key will be generated and will replace the existing one.
+    </div>
+
+    <div id="controls">
+      <button id="cancel">Cancel</button>
+      <button id="continue">Continue</button>
+    </div>
+  </div>
 </body>
 </html>

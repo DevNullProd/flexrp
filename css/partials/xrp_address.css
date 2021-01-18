@@ -1,0 +1,31 @@
+#_xrp_address_partial{
+  display: none;
+  margin-top: 25px;
+}
+
+#_xrp_address_partial h3{
+  margin: 0;
+  font-family: DMSans;
+}
+
+#xrp_address_container{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+#xrp_address_info{
+  color: #7D7C7C;
+  font-family: Poppins;
+  font-size: 0.7rem;
+}
+
+#xrp_address{
+  width: 100%;
+  line-height: 17px;
+  margin-top: 5px;
+}
+
+#xrp_address_invalid{
+  display: none;
+}

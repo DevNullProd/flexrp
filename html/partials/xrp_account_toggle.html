@@ -1,8 +1,19 @@
+<!-- Control allowing user to pecify account to be setup
+     (different than one corresponding to keypair signing transaction)
+-->
 <div id="_xrp_account_toggle_partial">
-  <!-- Specify account to be setup
-       (different than one corresponding to keypair signing transaction) -->
-  <div id="specify_account_container">
-    <label for="specify_account">Specify XRP Account to setup</label>
-    <input type="checkbox" id="specify_account" />
+  <div id="xrp_account_toggle_container">
+    <label for="xrp_account_toggle">
+      <span id="xrp_account_toggle_label">Specify XRP Account</span>
+    </label>
+
+    <label class="switch">
+      <input id="xrp_account_toggle" type="checkbox">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div id="xrp_account_toggle_info">
+    Allows you to explicity set the XRP account to setup if different than the one corresponding to the secret key. Useful for hte case where you are using a RegularKeyPair to sign transactions.
   </div>
 </div>

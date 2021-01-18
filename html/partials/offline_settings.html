@@ -1,42 +1,44 @@
+<!-- Settings which apply in offline mode,
+     required to be set
+-->
 <div id="_offline_settings_partial">
-  <!-- The following three settings
-       (fee, sequence, max_ledger_verison)
-       only apply in offline mode (required to be set) -->
-
-  <!-- Fee to set for transaction -->
-  <div id="fee_container">
-    <label for="fee">Fee</label>
-    <input type="text" id="fee" />
+  <div id="offline_settings_info">
+    Please configure the following parameters in order to generate a XRP transaction
   </div>
 
-  <div id="fee_error" class="error">
-    <div id="fee_invalid">
-      Fee is invalid
-    </div>
+  <!-- Fee to set for transaction -->
+  <div class="offline_settings_header">
+    <label for="fee">Fee</label>
+    <span class="offline_settings_help">The amount of XRP to pay in fees</span>
+  </div>
+
+  <input type="text" id="fee" />
+
+  <div id="fee_invalid" class="error">
+    Fee is invalid
   </div>
 
   <!-- Transaction sequence number -->
-  <div id="sequence_container">
+  <div class="offline_settings_header">
     <label for="sequence">Sequence</label>
-    <input type="text" id="sequence" />
+    <span class="offline_settings_help">The sequence number to assign to the transaction</span>
   </div>
 
-  <div id="sequence_error" class="error">
-    <div id="sequence_invalid">
-      Sequence is invalid
-    </div>
+  <input type="text" id="sequence" />
+
+  <div id="sequence_invalid" class="error">
+    Sequence is invalid
   </div>
 
   <!-- Max ledger version to apply transaction to -->
-  <div id="max_ledger_version_container">
+  <div class="offline_settings_header">
     <label for="max_ledger_version">Max Ledger Version</label>
-    <input type="text" id="max_ledger_version" />
+    <span class="offline_settings_help">The highest ledger number which this transaction can be included in</span>
   </div>
 
-  <div id="max_ledger_version_error" class="error">
-    <div id="max_ledger_version_invalid">
-      Max Ledger Version is invalid
-    </div>
-  </div>
+  <input type="text" id="max_ledger_version" />
 
+  <div id="max_ledger_version_invalid" class="error">
+    Max Ledger Version is invalid
+  </div>
 </div>
