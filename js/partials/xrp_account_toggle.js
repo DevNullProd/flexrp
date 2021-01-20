@@ -1,12 +1,12 @@
-function restore_xrp_account_toggle_partial(settings){
-  var specify_account = document.getElementById("specify_account");
-  specify_account.checked = settings.specify_account;
-}
-
 // Set specify_account setting
 function wire_up_specify_account(){
-  var specify_account = document.getElementById("specify_account");
+  var specify_account = document.getElementById("xrp_account_toggle");
   specify_account.addEventListener("change",function(e){
-    ipcRenderer.send('set_setting', {specify_account : this.checked});
-  },false);
+    settings.specify_account = this.checked;
+    ipcRenderer.send('settings_updated');
+  }, false);
+}
+
+function xrp_account_toggle_partial_loaded(){
+  wire_up_specify_account();
 }

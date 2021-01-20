@@ -1,9 +1,18 @@
+function reset_xrp_address(){
+  var xrp_address = document.getElementById("xrp_address");
+  var xrp_address_invalid = document.getElementById("xrp_address_invalid")
+
+  xrp_address.value = null;
+  xrp_address_invalid.style.display = 'none';
+  inputs_valid.xrp_address = false;
+}
+
 // Toggle xrp_address visibility based on specify_account setting
-function toggle_xrp_address(specify_account){
-  var container = document.getElementById("xrp_address_container");
+function toggle_xrp_address(){
+  var container = document.getElementById("_xrp_address_partial");
   var xrp_address = document.getElementById("xrp_address");
 
-  if(specify_account){
+  if(settings.specify_account){
     container.style.display = 'block';
     xrp_address.value = null;
     inputs_valid.xrp_address = false;
@@ -18,13 +27,16 @@ function toggle_xrp_address(specify_account){
 
 // Toggle xrp address error visibilty based on input validity
 function toggle_xrp_address_error(){
+  var xrp_address = document.getElementById("xrp_address");
   var xrp_address_invalid = document.getElementById("xrp_address_invalid")
 
   if(inputs_valid.xrp_address){
     xrp_address_invalid.style.display = 'none';
+    xrp_address.classList.remove("error_input")
 
   }else{
     xrp_address_invalid.style.display = 'block';
+    xrp_address.classList.add("error_input")
   }
 }
 
@@ -32,20 +44,29 @@ function toggle_xrp_address_error(){
 function validate_xrp_address(){
   var xrp_address = document.getElementById("xrp_address");
 
-  inputs_valid.xrp_address = offline_api.isValidAddress(xrp_address.value)
+  inputs_valid.xrp_address = offline_api.isValidAddress(xrp_address.value);
   toggle_xrp_address_error();
   toggle_submit();
 }
 
 // Validate xrp address on input
 function wire_up_xrp_address(){
-  // Update state of UI on settings
   ipcRenderer.on("settings_updated", (event, settings) => {
-    toggle_xrp_address(settings.specify_account)
+    toggle_xrp_address();
   })
 
   var xrp_address = document.getElementById("xrp_address");
   xrp_address.addEventListener("input",function(e){
-    validate_xrp_address();
-  },false);
+    if(xrp_address.value.length >= 34)
+      validate_xrp_address();
+  }, false);
+
+  xrp_address.addEventListener("blur",function(e){
+    if(xrp_address.value.length > 0)
+      validate_xrp_address();
+  }, false);
+}
+
+function xrp_address_partial_loaded(){
+  wire_up_xrp_address();
 }

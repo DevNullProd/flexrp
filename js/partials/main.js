@@ -1,3 +1,5 @@
+const {ipcRenderer} = require('electron')
+
 function load_xrp_secret_partial(){
   append_partial("xrp_secret_partial", load_partial("xrp_secret"));
 }
@@ -12,10 +14,15 @@ function load_eth_address_partial(){
 
 // Enable / disable submit button based on xrp and eth input validity
 function toggle_submit(){
-  var submit = document.getElementById("submit");
-  submit.disabled = !inputs_valid.xrp_secret  ||
-                    !inputs_valid.xrp_address ||
-                    !inputs_valid.eth_address;
+  var submit = document.getElementById("_main_partial_submit");
+  submit.disabled = !inputs_valid.xrp_secret   ||
+                    (settings.specify_account  &&
+                    !inputs_valid.xrp_address) ||
+                    !inputs_valid.eth_address  ||
+                    (settings.offline          &&
+                   (!inputs_valid.fee          ||
+                    !inputs_valid.sequence     ||
+                    !inputs_valid.max_ledger_version));
 }
 
 // Wire up submit button click: retrieve settings and process transaction
@@ -25,14 +32,18 @@ function wire_up_submit(){
   submit.addEventListener("click",function(e){
     loader.style.display = 'block';
     submit.style.display = 'none';
-    ipcRenderer.on("got_settings", (event, settings) => {
-      process_tx(settings);
-    })
-    ipcRenderer.send("get_settings")
+    process_tx(settings);
   })
 }
 
 function wire_up_clear(){
+  var clear = document.getElementById("_main_partial_clear_all");
+  clear.addEventListener("click",function(e){
+    reset_xrp_secret();
+    reset_xrp_address();
+    reset_eth_address();
+    toggle_submit();
+  });
 }
 
 function wire_up_controls(){

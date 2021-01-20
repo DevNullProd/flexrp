@@ -1,25 +1,16 @@
-function restore_offline_settings_partial(settings){
-  var offline = document.getElementById("offline");
-  offline.checked = settings.offline;
-  toggle_offline_settings();
-}
-
 // Toggle offline settings visibility based on offline input state
 function toggle_offline_settings(){
-  var offline = document.getElementById("offline");
+  var offline = document.getElementById("offline_toggle");
   const offline_enabled = offline.checked;
+
+  const settings = document.getElementById("offline_settings_partial")
   if(offline_enabled){
-    fee_container.style.display                = 'flex';
-    sequence_container.style.display           = 'flex';
-    max_ledger_version_container.style.display = 'flex';
+    settings.style.display = 'flex';
 
   }else{
-    fee_container.style.display                = 'none';
-    sequence_container.style.display           = 'none';
-    max_ledger_version_container.style.display = 'none';
+    settings.style.display = 'none';
   }
 }
-
 
 // Set offline setting, updating related controls / visibility
 function wire_up_offline(){
@@ -27,11 +18,16 @@ function wire_up_offline(){
   var sequence_container = document.getElementById("sequence_container");
   var max_ledger_version_container = document.getElementById("max_ledger_version_container");
 
-  var offline = document.getElementById("offline");
+  var offline = document.getElementById("offline_toggle");
   offline.addEventListener("change",function(e){
-    reset_offline_settings();
+    settings.offline = this.checked;
+    ipcRenderer.send('settings_updated');
+
     toggle_offline_settings();
-    toggle_close();
-    ipcRenderer.send('set_setting', {offline : this.checked});
+    toggle_submit();
   },false);
+}
+
+function offline_toggle_partial_loaded(){
+  wire_up_offline();
 }

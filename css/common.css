@@ -16,6 +16,11 @@ body{
   color: red;
 }
 
+.error_input{
+  border-color: red;
+  border-style: solid;
+}
+
 /* Switch slider control */
 
 /* switch - box around slider */

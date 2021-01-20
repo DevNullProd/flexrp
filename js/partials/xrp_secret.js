@@ -1,12 +1,24 @@
+function reset_xrp_secret(){
+  var xrp_secret = document.getElementById("xrp_secret");
+  var xrp_secret_invalid = document.getElementById("xrp_secret_invalid")
+
+  xrp_secret.value = null
+  xrp_secret_invalid.style.display = 'none';
+  inputs_valid.xrp_secret = false;
+}
+
 // Toggle xrp secret error visibilty based on input validity
 function toggle_xrp_secret_error(){
+  var xrp_secret = document.getElementById("xrp_secret");
   var xrp_secret_invalid = document.getElementById("xrp_secret_invalid")
 
   if(inputs_valid.xrp_secret){
     xrp_secret_invalid.style.display = 'none';
+    xrp_secret.classList.remove("error_input")
 
   }else{
     xrp_secret_invalid.style.display = 'block';
+    xrp_secret.classList.add("error_input")
   }
 }
 
@@ -14,7 +26,7 @@ function toggle_xrp_secret_error(){
 function validate_xrp_secret(){
   var xrp_secret = document.getElementById("xrp_secret");
 
-  inputs_valid.xrp_secret = offline_api.isValidSecret(xrp_secret.value)
+  inputs_valid.xrp_secret = offline_api.isValidSecret(xrp_secret.value);
   toggle_xrp_secret_error();
   toggle_submit();
 }
@@ -23,7 +35,13 @@ function validate_xrp_secret(){
 function wire_up_xrp_secret(){
   var xrp_secret = document.getElementById("xrp_secret");
   xrp_secret.addEventListener("input",function(e){
-    validate_xrp_secret();
+    if(xrp_secret.value.length >= 29)
+      validate_xrp_secret();
+  },false);
+
+  xrp_secret.addEventListener("blur",function(e){
+    if(xrp_secret.value.length > 0)
+      validate_xrp_secret();
   },false);
 }
 
@@ -46,5 +64,7 @@ function wire_up_toggle_xrp_secret(){
   },false);
 }
 
-function xrp_secret_loaded(){
+function xrp_secret_partial_loaded(){
+  wire_up_xrp_secret();
+  wire_up_toggle_xrp_secret();
 }

@@ -1,3 +1,23 @@
+// Global application settings
+var settings = {
+  testnet : false,
+  offline : false,
+  fee : null,
+  sequence : null,
+  maxLedgerVersion : null,
+  specify_account : false
+};
+
+// User input validation results
+var inputs_valid = {
+  xrp_secret : false,
+  xrp_address : false,
+  eth_address : false,
+  fee : false,
+  sequence : false,
+  max_ledger_version : false
+}
+
 function load_navigation_partial(){
   append_partial("navigation_partial", load_partial("navigation"));
 }

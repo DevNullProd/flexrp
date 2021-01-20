@@ -1,20 +1,33 @@
-const {ipcRenderer} = require('electron')
 const { isValidAddress } = require('ethereumjs-util')
+
+function reset_eth_address(){
+  var eth_address = document.getElementById("eth_address")
+  var eth_address_invalid = document.getElementById("eth_address_invalid")
+
+  eth_address.value = null
+  eth_address_invalid.style.display = 'none';
+  inputs_valid.eth_address = false;
+}
 
 // Toggle eth address error visibilty based on input validity
 function toggle_eth_address_error(){
+  var eth_address = document.getElementById("eth_address")
   var eth_address_invalid = document.getElementById("eth_address_invalid")
   if(inputs_valid.eth_address){
     eth_address_invalid.style.display = 'none';
+    eth_address.classList.remove("error_input")
 
   }else{
     eth_address_invalid.style.display = 'block';
+    eth_address.classList.add("error_input")
   }
 }
 
 // Validate eth address on input
 function validate_eth_address(){
   var eth_address = document.getElementById("eth_address")
+
+  inputs_valid.eth_address = true;
 
   try{
     inputs_valid.eth_address = isValidAddress(eth_address.value);
@@ -38,7 +51,8 @@ function wire_up_eth_address(){
 
   // Validate when we lose focus
   eth_address.addEventListener("blur",function(e){
-    validate_eth_address();
+    if(eth_address.value.length > 0)
+      validate_eth_address();
   })
 }
 

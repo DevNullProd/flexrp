@@ -46,16 +46,6 @@ var splash_win,
     main_win,
     generate_eth;
 
-// Global application settings
-var settings = {
-  testnet : false,
-  offline : false,
-  fee : null,
-  sequence : null,
-  maxLedgerVersion : null,
-  specify_account : false
-};
-
 // Generated ethereum account
 var eth_account = {
   persist : false,
@@ -129,6 +119,7 @@ ipcMain.on("show_security", (event) => {
     parent: splash_win,
     modal : true,
     title: "FleXRP Security",
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false
@@ -161,16 +152,9 @@ ipcMain.on("show_main", (event) => {
   main_win.loadFile('html/main.html')
 })
 
-// Retrieve application settings,
-// invokes 'got_settings' method with settings
-ipcMain.on('get_settings', (event) => {
-  event.reply('got_settings', settings)
-})
-
 // Set an application setting
-ipcMain.on('set_setting', (event, setting) => { 
-  Object.assign(settings, setting)
-  main_win.webContents.send("settings_updated", settings);
+ipcMain.on('settings_updated', (event) => {
+  main_win.webContents.send("settings_updated");
 })
 
 ///
@@ -220,6 +204,7 @@ ipcMain.on('show_eth_secret', (event) => {
     frame : false,
     parent : main_win,
     modal : true,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: false
