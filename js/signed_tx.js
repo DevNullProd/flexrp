@@ -1,46 +1,55 @@
 const {ipcRenderer} = require('electron')
 
-document.addEventListener("DOMContentLoaded", function(){
-  show_dialog({
-    buttons : [{
-      text : "OK",
-      id : "ok",
-      disabled : true
-    }]
-  });
+var operation_result;
 
-  // Retrieve signed tx, setting it on the page
-  var _signed_tx;
-  const signed_tx = document.getElementById("signed_tx")
-  ipcRenderer.on("got_signed_tx", (event, tx) => {
-    _signed_tx = tx;
+// Retrieve signed tx, setting it on the page
+function load_operation_result(){
+  const tx = document.getElementById("tx")
+  ipcRenderer.on("got_operation_result", (event, result) => {
+    operation_result = result;
 
-    var text = document.createTextNode(tx);
-    signed_tx.appendChild(text)
+    var text = document.createTextNode(result.tx);
+    tx.appendChild(text)
   })
-  ipcRenderer.send("get_signed_tx")
+  ipcRenderer.send("get_operation_result")
+}
 
-  // Close window on "ok" button
-  const ok = document.getElementById("ok")
-  ok.addEventListener("click", function(){
-    ipcRenderer.send("close_window")
-    ipcRenderer.send("signed_tx_complete")
+// Send operation_complete when OK is clicked
+function wire_up_ok(){
+  const done = document.getElementById("done")
+  done.addEventListener("click", function(){
+    ipcRenderer.send("operation_complete")
   })
 
-  // Only allow 'ok' is user confirmed copy
-  const copied = document.getElementById("copied")
-  copied.addEventListener("change", function() {
-    ok.disabled = !this.checked;
+  // Only allow 'ok' if user confirmed save
+  const saved = document.getElementById("saved")
+  saved.addEventListener("change", function() {
+    done.disabled = !this.checked;
   }, false);
+}
 
-  // Copy tx to clipboard on command
+function wire_up_copy(){
+  // Copy secret to clipboard on command
   const copy = document.getElementById("copy");
+  const tooltiptext = document.getElementById("copy_tooltiptext");
   copy.addEventListener("click", function(){
-    navigator.clipboard.writeText(_signed_tx)
+    navigator.clipboard.writeText(operation_result.tx)
              .then(function(){
-               alert("Copied!")
+               tooltiptext.style.visibility = 'visible';
+               setTimeout(function(){
+                 tooltiptext.style.visibility = 'hidden';
+               }, 3000)
+
              }).catch(function(){
-               alert("Problem Copying TX")
+               alert("Problem Copying Key")
              })
   })
-});
+}
+
+function signed_tx_dom_content_loaded(){
+  load_operation_result();
+  wire_up_ok();
+  wire_up_copy();
+}
+
+document.addEventListener("DOMContentLoaded", signed_tx_dom_content_loaded);

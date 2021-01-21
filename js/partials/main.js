@@ -27,12 +27,12 @@ function toggle_submit(){
 
 // Wire up submit button click: retrieve settings and process transaction
 function wire_up_submit(){
-  var loader = document.getElementById("loader");
+  var loading = document.getElementById("loading");
   var submit = document.getElementById("_main_partial_submit");
   submit.addEventListener("click",function(e){
-    loader.style.display = 'block';
-    submit.style.display = 'none';
-    process_tx(settings);
+    loading.style.display = 'block';
+    submit.disabled = true;
+    process_tx();
   })
 }
 

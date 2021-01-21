@@ -4,22 +4,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
 
+    <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/signed_tx.css" />
-    <script type="text/javascript" src="../js/dialog.js"></script>
     <script type="text/javascript" src="../js/signed_tx.js"></script>
 </head>
 
 <body>
-  <h2>Signed Transaction:</h2>
+  <div id="signed_tx">
+    <div id="signed_tx_info">
+      <h2>Signed Transaction</h2>
+    </div>
 
-  <div id="signed_tx_container">
-    <div id="signed_tx"></div>
-    <img id="copy" title="Copy" src="../assets/copy.svg" />
-  </div>
+    <div id="tx_details">
+      <h3>Offline transaction, it must be submitted independantly to take effect</h3>
 
-  <h3>Must be independently submitted to take effect.</h3>
+      <div id="tx_wrapper">
+        <div id="tx"></div>
+        <div id="copy">
+          <div class="tooltip">
+            <span id="copy_tooltiptext" class="tooltiptext">Copied!</span>
+            <img title="Copy" src="../assets/content_copy.svg" />
+          </div>
+        </div>
+      </div>
 
-  <label for="copied">I have copied this transaction for subsequent submission.</label>
-  <input type="checkbox" id="copied" />
+      <div id="saved_wrapper">
+        <input type="checkbox" id="saved" />
+        <label for="saved">I confirm this transaction has been copied and will be subsequently submitted</label>
+      </div>
+
+      <div id="controls">
+        <button id="done" disabled>Done</button>
+      </div>
+    </div>
 </body>
 </html>

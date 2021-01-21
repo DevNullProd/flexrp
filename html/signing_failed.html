@@ -1,0 +1,28 @@
+<!-- Render signed transaction -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
+
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/signing_failed.css" />
+    <script type="text/javascript" src="../js/signing_failed.js"></script>
+</head>
+
+<body>
+  <div id="signing_failed">
+    <div id="signing_failed_info">
+      <h2>Signed Transaction</h2>
+    </div>
+
+    <div id="err_details">
+      <h3>Signing the offline transaction failed because of the following reason:</h3>
+
+      <div id="err"></div>
+
+      <div id="controls">
+        <button id="ok">OK</button>
+      </div>
+    </div>
+</body>
+</html>

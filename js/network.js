@@ -43,8 +43,8 @@ async function sign_tx(api, settings){
 // Process transaction:
 // - offline mode: sign and render signed tx
 // - online mode: sign and submit
-async function process_tx(settings){
-  var loader = document.getElementById("loader");
+async function process_tx(){
+  var loading = document.getElementById("loading");
 
   if(settings.offline){
     var signed;
@@ -56,10 +56,11 @@ async function process_tx(settings){
     }
 
     if(error){
-      ipcRenderer.send("sign_failed", error);
+      ipcRenderer.send("set_operation_result", {err : error})
+      ipcRenderer.send("show_signing_failed");
 
     }else{
-      ipcRenderer.send("set_signed_tx", signed.signedTransaction);
+      ipcRenderer.send("set_operation_result", {tx : signed.signedTransaction});
       ipcRenderer.send("show_signed_tx");
     }
 
@@ -74,11 +75,13 @@ async function process_tx(settings){
       error = err
     }
 
-    if(error)
-      ipcRenderer.send("submit_failed", error)
-    else
-      ipcRenderer.send("submit_success")
+    if(error){
+      ipcRenderer.send("set_operation_result", {err: error})
+      ipcRenderer.send("show_submit_failed");
+
+    }else
+      ipcRenderer.send("show_submit_success")
   }
 
-  loader.style.display = 'none';
+  loading.style.display = 'none';
 }

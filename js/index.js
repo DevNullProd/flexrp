@@ -34,9 +34,19 @@ const SIZES = {
     height: 380
   },
 
+  signing_failed : {
+    width : 700,
+    height: 500
+  },
+
   signed_tx : {
+    width : 700,
+    height: 500
+  },
+
+  submit_result : {
     width : 425,
-    height: 400 
+    height: 400
   }
 }
 
@@ -44,7 +54,8 @@ const SIZES = {
 var splash_win,
     security_win,
     main_win,
-    generate_eth;
+    generate_eth,
+    signing_failed;
 
 // Generated ethereum account
 var eth_account = {
@@ -53,8 +64,11 @@ var eth_account = {
   secret : null
 };
 
-// Signed transaction
-var signed_tx = null;
+// Operation result
+var operation_result = {
+  err : null,
+  tx : null
+};
 
 ///
 
@@ -152,7 +166,7 @@ ipcMain.on("show_main", (event) => {
   main_win.loadFile('html/main.html')
 })
 
-// Set an application setting
+// Proxy settings_updated ipc call between windows
 ipcMain.on('settings_updated', (event) => {
   main_win.webContents.send("settings_updated");
 })
@@ -221,7 +235,7 @@ ipcMain.on('show_eth_secret', (event) => {
   eth_secret.loadFile('html/eth_secret.html')
 })
 
-// Close security window IPC command
+// Close eth_secret IPC command
 ipcMain.on('close_eth_secret', (event) => {
   eth_secret.close()
 })
@@ -233,25 +247,44 @@ ipcMain.on("persist_eth_account", (event) => {
 
 ///
 
-// Render dialog indicating tx signing failed
-ipcMain.on('sign_failed', (event, err) => {
-  dialog.showMessageBox(main_win, {
-    message : "Falure signing TX: " + err.message,
-    buttons : ["OK"]
-  }).then((result) => {
-    app.quit()
+// Set operation result
+ipcMain.on('set_operation_result', (event, result) => {
+  Object.assign(operation_result, result)
+})
+
+// Retrieve operation result
+ipcMain.on('get_operation_result', (event) => {
+  event.reply('got_operation_result', operation_result)
+})
+
+// Operation process complete, quit application
+ipcMain.on("operation_complete", (event) => {
+  app.quit()
+})
+
+///
+
+// Render signing fialed window
+ipcMain.on('show_signing_failed', (event, signed) => {
+  signing_failed = new BrowserWindow({
+    width: SIZES.signing_failed.width,
+    height: SIZES.signing_failed.height,
+    frame : false,
+    parent : main_win,
+    modal : true,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: false
+    }
   })
+
+  signing_failed.setMenu(null)
+  signing_failed.loadFile('html/signing_failed.html')
 })
 
-// Set signed transaction
-ipcMain.on('set_signed_tx', (event, signed) => {
-  signed_tx = signed;
-})
-
-// Retrieve signed transaction,
-// invoked 'got_signed_tx' with signed tx
-ipcMain.on('get_signed_tx', (event) => {
-  event.reply('got_signed_tx', signed_tx)
+// Close signing_failed window IPC command
+ipcMain.on('close_signing_failed', (event) => {
+  signing_failed.close()
 })
 
 // Render signed tx window
@@ -272,31 +305,43 @@ ipcMain.on('show_signed_tx', (event, signed) => {
   signed_tx.loadFile('html/signed_tx.html')
 })
 
-// Signed transaction process complete
-ipcMain.on("signed_tx_complete", (event) => {
-  app.quit()
-})
 
 ///
 
 // Render dialog indicating tx submission succeeded
 ipcMain.on("submit_success", (event) => {
-  dialog.showMessageBox(main_win, {
-    message : "Successfully submitted TX. You XRP account has been setup to receive Flare Spark tokens.",
-    buttons : ["OK"]
-  }).then((result) => {
-    app.quit()
+  const submit_success = new BrowserWindow({
+    width: SIZES.submit_result.width,
+    height: SIZES.submit_result.height,
+    frame: false,
+    parent: main_win,
+    modal: true,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: false
+    }
   })
+
+  signed_tx.setMenu(null)
+  signed_tx.loadFile('html/submit_success.html')
 })
 
 // Render dialog indicating tx submission failed
 ipcMain.on("submit_failed", (event, err) => {
-  dialog.showMessageBox(main_win, {
-    message : "Falure submitting TX: " + err.message,
-    buttons : ["OK"]
-  }).then((result) => {
-    app.quit()
+  const submit_failed = new BrowserWindow({
+    width: SIZES.submit_result.width,
+    height: SIZES.submit_result.height,
+    frame: false,
+    parent: main_win,
+    modal: true,
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: false
+    }
   })
+
+  signed_tx.setMenu(null)
+  signed_tx.loadFile('html/submit_failed.html')
 })
 
 ///
