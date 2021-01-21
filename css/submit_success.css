@@ -1,0 +1,26 @@
+#submit_success{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#submit_success_info{
+  background: #0076FF;
+  flex-grow: 1;
+  text-align: center;
+  color: white;
+  padding: 50px 20px;
+  font-family: Poppins;
+}
+
+#submit_success_info h3{
+  font-family: DMSans;
+}
+
+#ok{
+  height: 50px;
+  width: 100%;
+  border: none;
+  color: #0076FF;
+  font-family: DMSans;
+}

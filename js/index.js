@@ -44,7 +44,12 @@ const SIZES = {
     height: 500
   },
 
-  submit_result : {
+  submit_success : {
+    width : 325,
+    height: 400
+  },
+
+  submit_failed : {
     width : 425,
     height: 400
   }
@@ -55,7 +60,8 @@ var splash_win,
     security_win,
     main_win,
     generate_eth,
-    signing_failed;
+    signing_failed,
+    submit_failed;
 
 // Generated ethereum account
 var eth_account = {
@@ -162,7 +168,7 @@ ipcMain.on("show_main", (event) => {
     }
   })
 
-  //main_win.setMenu(null)
+  main_win.setMenu(null)
   main_win.loadFile('html/main.html')
 })
 
@@ -231,7 +237,7 @@ ipcMain.on('show_eth_secret', (event) => {
       main_win.webContents.send("update_eth_address", eth_account.address)
   });
 
-  //eth_secret.setMenu(null)
+  eth_secret.setMenu(null)
   eth_secret.loadFile('html/eth_secret.html')
 })
 
@@ -309,10 +315,10 @@ ipcMain.on('show_signed_tx', (event, signed) => {
 ///
 
 // Render dialog indicating tx submission succeeded
-ipcMain.on("submit_success", (event) => {
+ipcMain.on("show_submit_success", (event) => {
   const submit_success = new BrowserWindow({
-    width: SIZES.submit_result.width,
-    height: SIZES.submit_result.height,
+    width: SIZES.submit_success.width,
+    height: SIZES.submit_success.height,
     frame: false,
     parent: main_win,
     modal: true,
@@ -322,15 +328,15 @@ ipcMain.on("submit_success", (event) => {
     }
   })
 
-  signed_tx.setMenu(null)
-  signed_tx.loadFile('html/submit_success.html')
+  submit_success.setMenu(null)
+  submit_success.loadFile('html/submit_success.html')
 })
 
 // Render dialog indicating tx submission failed
-ipcMain.on("submit_failed", (event, err) => {
-  const submit_failed = new BrowserWindow({
-    width: SIZES.submit_result.width,
-    height: SIZES.submit_result.height,
+ipcMain.on("show_submit_failed", (event, err) => {
+  submit_failed = new BrowserWindow({
+    width: SIZES.submit_failed.width,
+    height: SIZES.submit_failed.height,
     frame: false,
     parent: main_win,
     modal: true,
@@ -340,8 +346,13 @@ ipcMain.on("submit_failed", (event, err) => {
     }
   })
 
-  signed_tx.setMenu(null)
-  signed_tx.loadFile('html/submit_failed.html')
+  submit_failed.setMenu(null)
+  submit_failed.loadFile('html/submit_failed.html')
+})
+
+// Close submit_failed window IPC command
+ipcMain.on('close_submit_failed', (event) => {
+  submit_failed.close()
 })
 
 ///
