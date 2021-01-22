@@ -37,7 +37,7 @@ To start launch the application and confirm you are running on a secure system:
 
 ![Security Check](screenshots/secure-system.png)
 
-Optionally click the settings icon in the upper right to configure application settings (see *settings* below).
+Optionally click the settings icon in the navigation to configure application settings (see *settings* below).
 
 ![Settings](screenshots/settings-control.png)
 ![Settings](screenshots/settings-window.png)
@@ -70,7 +70,7 @@ You are now done! You will receive Flare Spark tokens on the date of the airdrop
 
 ## Settings
 
-Application settings can be configured by clicking the gears icons in the upper right.
+Application settings can be configured by clicking the gears icons in the navigation.
 
 - **Connect to testnet** - The XRPL testnet will be used instead of the mainnet. Read more about this [here](https://xrpl.org/parallel-networks.html)
 
