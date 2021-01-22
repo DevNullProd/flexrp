@@ -5,6 +5,8 @@ const {
   dialog
 } = require('electron')
 
+const path = require('path')
+
 ///
 
 // Default window sizes
@@ -84,6 +86,7 @@ function createSplash(){
     width:  SIZES.splash.width,
     height: SIZES.splash.height,
     title: "FleXRP",
+    icon: path.join(__dirname, '..', 'assets/app-icon.png'),
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
@@ -139,6 +142,7 @@ ipcMain.on("show_security", (event) => {
     parent: splash_win,
     modal : true,
     title: "FleXRP Security",
+    icon: path.join(__dirname, '..', 'assets/app-icon.png'),
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
@@ -161,6 +165,7 @@ ipcMain.on("show_main", (event) => {
     width:  SIZES.main.width,
     height: SIZES.main.height,
     title: "FleXRP",
+    icon: path.join(__dirname, '..', 'assets/app-icon.png'),
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
