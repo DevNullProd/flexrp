@@ -2,7 +2,7 @@
 
 This application will setup a XRP account for the Flare Spark token airdrop.
 
-(C) 2020 - Dev Null Productions <devnullproductions@gmail.com>
+(C) 2020-2021 - Dev Null Productions <devnullproductions@gmail.com>
 
 ## Installation
 
