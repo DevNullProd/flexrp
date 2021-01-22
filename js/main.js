@@ -1,5 +1,7 @@
 // main window control logic
 
+const {ipcRenderer} = require('electron')
+
 // Global application settings
 var settings = {
   testnet : false,
@@ -42,14 +44,24 @@ function load_info_partial(){
 
 ///
 
+// Reset online api when settings are updated
+function configure_network(){
+  ipcRenderer.on("settings_updated", (event, settings) => {
+    reset_online_api();
+  })
+}
+
+///
+
 // DOM Control Loaded callback,
 // - load DOM partials
-
+// - configure network
 function main_dom_content_loaded(){
   load_navigation_partial()
   load_main_partial()
   load_settings_partial()
   load_info_partial()
+  configure_network();
 }
 
 document.addEventListener("DOMContentLoaded", main_dom_content_loaded);

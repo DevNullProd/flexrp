@@ -17,12 +17,9 @@ function toggle_xrp_address(){
 
   if(settings.specify_account){
     container.style.display = 'block';
-    xrp_address.value = null;
-    inputs_valid.xrp_address = false;
 
   }else{
     container.style.display = 'none';
-    inputs_valid.xrp_address = true;
   }
 
   toggle_submit();

@@ -20,13 +20,13 @@
   background: #0076FF;
   border: 0;
   border-radius: 3px;
-  padding: 3px 13px;
+  padding: 5px 13px;
   cursor: pointer;
 }
 
 #eth_address{
   width: 100%;
-  line-height: 17px;
+  line-height: 25px;
   margin-top: 5px;
 }
 

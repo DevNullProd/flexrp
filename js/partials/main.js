@@ -1,7 +1,5 @@
 // main partial control logic
 
-const {ipcRenderer} = require('electron')
-
 // Append partials to DOM
 
 function load_xrp_secret_partial(){

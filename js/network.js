@@ -17,6 +17,11 @@ async function online_api(settings){
   return _online_api;
 }
 
+// Reset online api
+function reset_online_api(){
+  _online_api = null;
+}
+
 // Sign transaction using input values and settings
 async function sign_tx(api, settings){
   var xrp_secret = document.getElementById("xrp_secret");
