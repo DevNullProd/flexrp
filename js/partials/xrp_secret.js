@@ -1,3 +1,6 @@
+// xrp_secret component control logic
+
+// Reset variables and DOM components to initial state
 function reset_xrp_secret(){
   var xrp_secret = document.getElementById("xrp_secret");
   var xrp_secret_invalid = document.getElementById("xrp_secret_invalid")
@@ -34,11 +37,14 @@ function validate_xrp_secret(){
 // Validate xrp secret on input
 function wire_up_xrp_secret(){
   var xrp_secret = document.getElementById("xrp_secret");
+
+  // Validate if we have the minimum # of characters
   xrp_secret.addEventListener("input",function(e){
     if(xrp_secret.value.length >= 29)
       validate_xrp_secret();
   },false);
 
+  // Validate when we lose focus
   xrp_secret.addEventListener("blur",function(e){
     if(xrp_secret.value.length > 0)
       validate_xrp_secret();
@@ -64,6 +70,11 @@ function wire_up_toggle_xrp_secret(){
   },false);
 }
 
+///
+
+// Partial Loaded callback,
+// - wire up controls
+function xrp_address_partial_loaded(){
 function xrp_secret_partial_loaded(){
   wire_up_xrp_secret();
   wire_up_toggle_xrp_secret();

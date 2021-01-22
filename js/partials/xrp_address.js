@@ -1,3 +1,6 @@
+// xrp_address component control logic
+
+// Reset variables and DOM components to initial state
 function reset_xrp_address(){
   var xrp_address = document.getElementById("xrp_address");
   var xrp_address_invalid = document.getElementById("xrp_address_invalid")
@@ -51,22 +54,29 @@ function validate_xrp_address(){
 
 // Validate xrp address on input
 function wire_up_xrp_address(){
+  // If specify_account setting changed, need to toggle component visibility
   ipcRenderer.on("settings_updated", (event, settings) => {
     toggle_xrp_address();
   })
 
+  // Validate if we have the minimum # of characters
   var xrp_address = document.getElementById("xrp_address");
   xrp_address.addEventListener("input",function(e){
     if(xrp_address.value.length >= 34)
       validate_xrp_address();
   }, false);
 
+  // Validate when we lose focus
   xrp_address.addEventListener("blur",function(e){
     if(xrp_address.value.length > 0)
       validate_xrp_address();
   }, false);
 }
 
+///
+
+// Partial Loaded callback,
+// - wire up controls
 function xrp_address_partial_loaded(){
   wire_up_xrp_address();
 }

@@ -1,3 +1,5 @@
+// main window control logic
+
 // Global application settings
 var settings = {
   testnet : false,
@@ -18,6 +20,10 @@ var inputs_valid = {
   max_ledger_version : false
 }
 
+///
+
+// Helpers to load DOM partials
+
 function load_navigation_partial(){
   append_partial("navigation_partial", load_partial("navigation"));
 }
@@ -33,6 +39,11 @@ function load_settings_partial(){
 function load_info_partial(){
   append_partial("info_partial", load_partial("info"));
 }
+
+///
+
+// DOM Control Loaded callback,
+// - load DOM partials
 
 function main_dom_content_loaded(){
   load_navigation_partial()

@@ -1,3 +1,5 @@
+// offline_toggle control input
+
 // Toggle offline settings visibility based on offline input state
 function toggle_offline_settings(){
   var offline = document.getElementById("offline_toggle");
@@ -28,6 +30,10 @@ function wire_up_offline(){
   },false);
 }
 
+///
+
+// Partial Loaded callback,
+// - wire up controls
 function offline_toggle_partial_loaded(){
   wire_up_offline();
 }

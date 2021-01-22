@@ -1,3 +1,5 @@
+// network operations and helpers
+
 const RippleAPI = require('ripple-lib').RippleAPI;
 const offline_api = new RippleAPI();
 
@@ -40,12 +42,11 @@ async function sign_tx(api, settings){
   return api.sign(prepared.txJSON, xrp_secret.value)
 }
 
-// Process transaction:
-// - offline mode: sign and render signed tx
-// - online mode: sign and submit
+// Process transaction
 async function process_tx(){
   var loading = document.getElementById("loading");
 
+  // Offline mode: sign and render signed tx
   if(settings.offline){
     var signed;
     var error = null
@@ -64,6 +65,8 @@ async function process_tx(){
       ipcRenderer.send("show_signed_tx");
     }
 
+
+  // Online mode: sign and submit tx
   }else{
     const api = await online_api(settings)
 

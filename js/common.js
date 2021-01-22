@@ -1,3 +1,5 @@
+// Common application routines / helpers
+
 // Return boolean indicating if input is an integer
 function is_int(n){
   return Number(n) === n && n % 1 === 0;

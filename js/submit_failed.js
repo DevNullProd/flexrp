@@ -1,6 +1,8 @@
+// submit_failed window control logic
+
 const {ipcRenderer} = require('electron')
 
-
+// Retrieve signing error, setting it on the page
 function load_operation_result(){
   const err = document.getElementById("err")
   ipcRenderer.on("got_operation_result", (event, result) => {
@@ -10,6 +12,7 @@ function load_operation_result(){
   ipcRenderer.send("get_operation_result")
 }
 
+// Close window when 'OK' is clicked
 function wire_up_ok(){
   const ok = document.getElementById("ok")
   ok.addEventListener("click", function(){
@@ -17,6 +20,11 @@ function wire_up_ok(){
   })
 }
 
+///
+
+// DOM Content Loaded callback,
+// - load operation result
+// - wire up controls
 function signing_failed_dom_content_loaded(){
   load_operation_result();
   wire_up_ok();

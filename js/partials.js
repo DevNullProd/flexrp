@@ -1,6 +1,10 @@
+// Logic to load partial components and append to page
+
 const fs = require('fs');
 const path = require('path');
 
+// Load and return partial specified by name from
+// 'partials' subdirs under html, js, and css.
 function load_partial(name){
   var partial = {name}
 
@@ -19,6 +23,9 @@ function load_partial(name){
   return partial;
 }
 
+// Append given partial to DOM component identified w/ ID.
+// If appending JS component and partial.name + '_partial_loaded'
+// is defined, invoke it.
 function append_partial(id, partial){
   const dom = document.getElementById(id);
   if(partial.html)

@@ -1,4 +1,4 @@
-<!-- Render signed transaction -->
+<!-- Render signed hex transaction -->
 <html>
 <head>
     <meta charset="UTF-8">
@@ -19,7 +19,10 @@
       <h3>Offline transaction, it must be submitted independantly to take effect</h3>
 
       <div id="tx_wrapper">
+        <!-- Will be populated with hex transaction -->
         <div id="tx"></div>
+
+        <!-- Copy to clipboard control -->
         <div id="copy">
           <div class="tooltip">
             <span id="copy_tooltiptext" class="tooltiptext">Copied!</span>
@@ -28,11 +31,13 @@
         </div>
       </div>
 
+      <!-- Checkbox muts be clicked to enable Done Button -->
       <div id="saved_wrapper">
         <input type="checkbox" id="saved" />
         <label for="saved">I confirm this transaction has been copied and will be subsequently submitted</label>
       </div>
 
+      <!-- Clicking done exits the application -->
       <div id="controls">
         <button id="done" disabled>Done</button>
       </div>

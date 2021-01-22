@@ -1,3 +1,5 @@
+// navigation partial control logic
+
 // Hide all sections
 function navigation_hide_all(){
   const main     = document.getElementById("main_partial");
@@ -68,6 +70,10 @@ function wire_up_navigation_info(){
   }, false);
 }
 
+///
+
+// Partial Loaded callback,
+// - wire up navigation components
 function navigation_partial_loaded(){
   wire_up_navigation_logo();
   wire_up_navigation_home();

@@ -1,3 +1,5 @@
+// eth_secret window control logic
+
 const {ipcRenderer} = require('electron')
 
 var eth_account;
@@ -14,6 +16,7 @@ function load_eth_secret(){
   ipcRenderer.send("get_eth_account")
 }
 
+// Toggle 'Done' button based on 'Saved' checkbox state
 function wire_up_saved(){
   const done = document.getElementById("done")
   const saved = document.getElementById("saved");
@@ -30,7 +33,7 @@ function wire_up_cancel(){
   }, false)
 }
 
-// Persist account and close window on Done
+// Persist account and close window on 'Done'
 function wire_up_done(){
   const done = document.getElementById("done")
   done.addEventListener("click", function(){
@@ -38,20 +41,21 @@ function wire_up_done(){
     ipcRenderer.send("close_eth_secret")
   })
 
-  // Only allow 'done' if user confirmed save
+  // Only allow 'Done' if user confirmed save
   const saved = document.getElementById("saved")
   saved.addEventListener("change", function() {
     done.disabled = !this.checked;
   }, false);
 }
 
+// Copy secret to clipboard on command
 function wire_up_copy(){
-  // Copy secret to clipboard on command
   const copy = document.getElementById("copy");
   const tooltiptext = document.getElementById("copy_tooltiptext");
   copy.addEventListener("click", function(){
     navigator.clipboard.writeText(eth_account.secret)
              .then(function(){
+               // Render 'Copied' tooltip, and hide after a few seconds
                tooltiptext.style.visibility = 'visible';
                setTimeout(function(){
                  tooltiptext.style.visibility = 'hidden';
@@ -63,6 +67,11 @@ function wire_up_copy(){
   })
 }
 
+///
+
+// DOM Content Loaded callback,
+// - load eth secret
+// - wire up controls
 function eth_secret_dom_content_loaded(){
   load_eth_secret();
   wire_up_saved();

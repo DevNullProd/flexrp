@@ -1,5 +1,8 @@
+// eth_address component control logic
+
 const { isValidAddress } = require('ethereumjs-util')
 
+// Reset variables and DOM components to initial state
 function reset_eth_address(){
   var eth_address = document.getElementById("eth_address")
   var eth_address_invalid = document.getElementById("eth_address_invalid")
@@ -13,6 +16,7 @@ function reset_eth_address(){
 function toggle_eth_address_error(){
   var eth_address = document.getElementById("eth_address")
   var eth_address_invalid = document.getElementById("eth_address_invalid")
+
   if(inputs_valid.eth_address){
     eth_address_invalid.style.display = 'none';
     eth_address.classList.remove("error_input")
@@ -26,8 +30,6 @@ function toggle_eth_address_error(){
 // Validate eth address on input
 function validate_eth_address(){
   var eth_address = document.getElementById("eth_address")
-
-  inputs_valid.eth_address = true;
 
   try{
     inputs_valid.eth_address = isValidAddress(eth_address.value);
@@ -67,12 +69,17 @@ function wire_up_create_eth_address(){
     toggle_submit();
   })
 
+  // show_generate_eth window when 'Create' is clicked
   var create = document.getElementById("create_eth_address");
   create.addEventListener("click",function(e){
     ipcRenderer.send('show_generate_eth');
   },false);
 }
 
+///
+
+// Partial Loaded callback,
+// - wire up controls
 function eth_address_partial_loaded(){
   wire_up_eth_address();
   wire_up_create_eth_address();

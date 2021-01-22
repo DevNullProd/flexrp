@@ -7,14 +7,17 @@
   <div id="eth_address_container">
     <h3>ETH Address:</h3>
 
+    <!-- Click this button to launch generate_eth window -->
     <button id="create_eth_address">
       <img src="../assets/Icon-plus.svg" />
       New
     </button>
   </div>
 
+  <!-- This input is validated to ensure it is an ETH address -->
   <input id="eth_address" type="text" />
 
+  <!-- Rendered if ETH address is invalid -->
   <div id="eth_address_invalid" class="error">
     Invalid ETH Address
   </div>

@@ -1,11 +1,11 @@
-// Splash window dynamic logic
+// splash window control logic
 
 const {ipcRenderer} = require('electron')
 const pkg = require("../package.json")
 
 ///
 
-// Send IPC request to launch the security window which 'More Info' is clicked
+// Launch the security window when 'More Info' is clicked
 function wireup_security_moreinfo(){
   var security_moreinfo = document.getElementById("splash_security_moreinfo");
   security_moreinfo.addEventListener("click", function(e){
@@ -13,7 +13,7 @@ function wireup_security_moreinfo(){
   })
 }
 
-// Send IPC request to quit the application when 'Quit' is clicked
+// Quit the application when 'Quit' is clicked
 function wireup_quit(){
   var quit = document.getElementById("splash_quit");
   quit.addEventListener("click", function(e){
@@ -21,7 +21,7 @@ function wireup_quit(){
   })
 }
 
-// Send IPC request to show main window and close splash window
+// Show main window and close splash window
 // when 'I confirm' is clicked
 function wireup_confirm(){
   var cnfirm = document.getElementById("splash_confirm");
@@ -39,7 +39,9 @@ function set_version(){
 
 ///
 
-// Initialization routine called when DOM is loaded
+// DOM Content Loaded callback,
+// - wire up controls
+// - set version
 function splash_dom_content_loaded(){
   wireup_security_moreinfo();
   wireup_quit();

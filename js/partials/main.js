@@ -1,4 +1,8 @@
+// main partial control logic
+
 const {ipcRenderer} = require('electron')
+
+// Append partials to DOM
 
 function load_xrp_secret_partial(){
   append_partial("xrp_secret_partial", load_partial("xrp_secret"));
@@ -12,9 +16,21 @@ function load_eth_address_partial(){
   append_partial("eth_address_partial", load_partial("eth_address"));
 }
 
-// Enable / disable submit button based on xrp and eth input validity
+///
+
+// Enable / disable 'Submit' button based on input validity
 function toggle_submit(){
   var submit = document.getElementById("_main_partial_submit");
+
+  // Conditions to enable button:
+  // - xrp_secret must be valid
+  // - if specify_account setting is set
+  //   - xrp_address must be valid
+  // - eth_address must be valid
+  // - if offline setting is set
+  //   - fee must be valid
+  //   - sequence must be valid
+  //   - max_ledger_version must be valid
   submit.disabled = !inputs_valid.xrp_secret   ||
                     (settings.specify_account  &&
                     !inputs_valid.xrp_address) ||
@@ -25,7 +41,7 @@ function toggle_submit(){
                     !inputs_valid.max_ledger_version));
 }
 
-// Wire up submit button click: retrieve settings and process transaction
+// Wire up 'Submit' button click: process transaction
 function wire_up_submit(){
   var loading = document.getElementById("loading");
   var submit = document.getElementById("_main_partial_submit");
@@ -36,6 +52,7 @@ function wire_up_submit(){
   })
 }
 
+// Wire up 'Clear' button click, reset input controls
 function wire_up_clear(){
   var clear = document.getElementById("_main_partial_clear_all");
   clear.addEventListener("click",function(e){
@@ -46,14 +63,15 @@ function wire_up_clear(){
   });
 }
 
-function wire_up_controls(){
-  wire_up_submit();
-  wire_up_clear();
-}
+///
 
+// Partial Loaded callback,
+// - load partials
+// - wire up controls
 function main_partial_loaded(){
   load_xrp_secret_partial();
   load_xrp_address_partial();
   load_eth_address_partial();
-  wire_up_controls();
+  wire_up_submit();
+  wire_up_clear();
 }
