@@ -8,10 +8,10 @@ This application will setup a XRP account for the Flare Spark token airdrop.
 
 Download and run the following:
 
-- On Windows: [flexrp.exe](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp-2.0.0.exe)
-- On MacOS: [flexrp.dmg](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp-2.0.0.dmg)
-- On RedHat/Fedora Linux: [flexrp.rpm](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp-2.0.0.x86_64.rpm)
-- On Ubuntu/Debian Linux: [flexrp.deb](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp_2.0.0_amd64.deb)
+- On Windows: [flexrp.exe](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp-2.0.1.exe)
+- On MacOS: [flexrp.dmg](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp-2.0.1.dmg)
+- On RedHat/Fedora Linux: [flexrp.rpm](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp-2.0.1.x86_64.rpm)
+- On Ubuntu/Debian Linux: [flexrp.deb](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp_2.0.1_amd64.deb)
 
 MacOS support coming soon!
 
