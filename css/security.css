@@ -2,6 +2,46 @@
   padding: 25px;
 }
 
+#security_info{
+  font-family: Poppins;
+}
+
+.security_info_separator{
+  border-top: 2px solid #E87161;
+  width: 50px;
+  height: 1px;
+  margin: 0 auto;
+}
+
+#security_info_preface{
+  margin-bottom: 50px;
+}
+
+#security_info_header{
+  font-weight: bold;
+  text-align: center;
+  margin-top: 25px;
+}
+
+#security_info_section1{
+  display: flex;
+  margin-top: 50px;
+}
+
+#security_info_section2{
+  display: flex;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+#security_info_section3{
+  margin-top: 25px;
+}
+
+#security_info_subsection4{
+  display: flex;
+}
+
 #security_close{
   border: 0;
   margin: 25px auto;

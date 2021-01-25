@@ -1,9 +1,4 @@
-<!-- Main application window, contains:
-     - navigation partial
-     - main partial
-     - settings partial
-     - help partial
--->
+<!-- Main application window -->
 <html>
 <head>
     <meta charset="UTF-8">
@@ -11,7 +6,6 @@
 
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/main.css" />
-    <script type="text/javascript" src="../js/partials.js"></script>
     <script type="text/javascript" src="../js/common.js"></script>
     <script type="text/javascript" src="../js/network.js"></script>
     <script type="text/javascript" src="../js/main.js"></script>
@@ -19,10 +13,328 @@
 
 <body>
   <div id="main">
-    <div id="navigation_partial"></div>
-    <div id="main_partial"></div>
-    <div id="settings_partial"></div>
-    <div id="info_partial"></div>
+    <!-- Main navigation -->
+    <div id="navigation">
+      <img id="navigation_logo"     class="navigation_icon" src="../assets/app-icon.png" />
+
+      <img id="navigation_home"     class="navigation_icon" src="../assets/home.svg"     />
+      <div id="navigation_main_indicator" class="navigation_indicator active"></div>
+
+      <img id="navigation_settings" class="navigation_icon" src="../assets/settings.svg" />
+      <div id="navigation_settings_indicator" class="navigation_indicator"></div>
+
+      <img id="navigation_info"     class="navigation_icon" src="../assets/info.svg"     />
+      <div id="navigation_info_indicator" class="navigation_indicator"></div>
+    </div>
+
+    <!-- Main subsection, contains:
+         - xrp secret
+         - xrp address
+         - ethereum address input (and generation control)
+         - clear all control
+         - submit button
+         - loading icon
+         - security warning -->
+    <div id="main_subsection">
+      <h1>Workspace</h1>
+
+      <!-- XRP Secret control -->
+      <div id="xrp_secret_subsection">
+        <h3>XRP Secret Key:</h3>
+
+        <div id="xrp_secret_container">
+          <!-- This input is validated to ensure it is an XRP secret -->
+          <input id="xrp_secret" type="password" />
+
+          <!-- Displays / hides the xrp secret control by changing the input type -->
+          <img id="view_xrp_secret" src="../assets/Icon-show.svg" title="Show Secret" />
+          <img id="hide_xrp_secret" src="../assets/Icon-Hide.svg" title="Hide Secret" />
+        </div>
+
+        <!-- Rendered if XRP secret is invalid -->
+        <div id="xrp_secret_invalid" class="error">
+          Invalid XRP Secret
+        </div>
+      </div>
+
+      <!-- XRP Address Control -->
+      <div id="xrp_address_subsection">
+        <div id="xrp_address_container">
+          <h3>XRP Account:</h3>
+
+          <div id="xrp_address_info">
+            You have opted-in to specify the XRP account to setup via the settings.
+          </div>
+        </div>
+
+        <!-- This input is validated to ensure it is an XRP address -->
+        <input id="xrp_address" type="text" />
+
+        <!-- Rendered if XRP address is invalid -->
+        <div id="xrp_address_invalid" class="error">
+          Invalid XRP Address
+        </div>
+      </div>
+
+      <!-- ETH Address Control -->
+      <div id="eth_address_subsection">
+        <div id="eth_address_container">
+          <h3>ETH Address:</h3>
+
+          <!-- Click this button to launch generate_eth window -->
+          <button id="create_eth_address">
+            <img src="../assets/Icon-plus.svg" />
+            New
+          </button>
+        </div>
+
+        <!-- This input is validated to ensure it is an ETH address -->
+        <input id="eth_address" type="text" />
+
+        <!-- Rendered if ETH address is invalid -->
+        <div id="eth_address_invalid" class="error">
+          Invalid ETH Address
+        </div>
+      </div>
+
+      <div id="main_controls">
+        <!-- Clear all input fields -->
+        <button id="main_clear_all">Clear All</button>
+
+        <!-- Submit form, setting up transaction and submitting (if online) -->
+        <button id="main_submit" disabled>Submit</button>
+      </div>
+
+      <!-- render loading indicator on submit -->
+      <div id="loading_container">
+        <div id="loading"></div>
+      </div>
+
+      <div id="main_security">
+        <img src="../assets/Icon-security-bk.svg" />
+        <div>Just a friendly reminder. This application requires access to your XRP Secret Key, please ensure you are running it in a secure environment.</div>
+      </div>
+    </div>
+
+
+    <!-- Application settings subsection -->
+    <div id="settings_subsection">
+      <h1>Settings</h1>
+
+      <!-- Control allowing user to select which network to connect to -->
+      <div id="network_selector">
+        <h2>Networks</h2>
+
+        <!-- Clicking a network enables it in the application -->
+        <div id="networks">
+          <div id="mainnet" class="network active">
+            <h3>Mainnet</h3>
+
+            <p>
+            The production XRP Ledger peer-to-peer network.
+            </p>
+          </div>
+
+          <div id="testnet" class="network">
+            <h3>Testnet</h3>
+
+            <p>
+            A alternate network that acts as a testing ground for software being built on the XRP Ledger, without impacting the mainnet or risking real money.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Control allowing user to disable network connection -->
+      <div id="offline_toggle_subsection">
+        <div id="offline_toggle_container">
+          <label for="offline_toggle">
+            <span id="offline_toggle_label">Offline mode</span>
+          </label>
+
+          <!-- Toggling this checkbox enables offline mode,
+               and displays offline settings -->
+          <label class="switch">
+            <input id="offline_toggle" type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div id="offline_toggle_info">
+          FleXRP will not connect to any XRP server and instead simply generate and sign a transaction for subsequent submission to the network.
+          <span id="offline_toggle_info_emphasis">YOU MUST INDEPENDENTLY SUBMIT THE PRODUCED TRANSACTION TO RECEIVE FLARE TOKENS</span>
+        </div>
+      </div>
+
+      <!-- Settings which apply in offline mode, required to be set -->
+      <div id="offline_settings_subsection">
+        <div id="offline_settings_info">
+          Please configure the following parameters in order to generate a XRP transaction
+        </div>
+
+        <!-- Fee to set for transaction -->
+        <div class="offline_settings_header">
+          <label for="fee">Fee</label>
+          <span class="offline_settings_help">The amount of XRP to pay in fees</span>
+        </div>
+
+        <input type="text" id="fee" />
+
+        <div id="fee_invalid" class="error">
+          Fee is invalid
+        </div>
+
+        <!-- Transaction sequence number -->
+        <div class="offline_settings_header">
+          <label for="sequence">Sequence</label>
+          <span class="offline_settings_help">The sequence number to assign to the transaction</span>
+        </div>
+
+        <input type="text" id="sequence" />
+
+        <div id="sequence_invalid" class="error">
+          Sequence is invalid
+        </div>
+
+        <!-- Max ledger version to apply transaction to -->
+        <div class="offline_settings_header">
+          <label for="max_ledger_version">Max Ledger Version</label>
+          <span class="offline_settings_help">The highest ledger number which this transaction can be included in</span>
+        </div>
+
+        <input type="text" id="max_ledger_version" />
+
+        <div id="max_ledger_version_invalid" class="error">
+          Max Ledger Version is invalid
+        </div>
+      </div>
+
+      <!-- Control allowing user to pecify account to be setup
+           (different than one corresponding to keypair signing transaction)
+      -->
+      <div id="xrp_account_toggle_subsection">
+        <div id="xrp_account_toggle_container">
+          <label for="xrp_account_toggle">
+            <span id="xrp_account_toggle_label">Specify XRP Account</span>
+          </label>
+
+          <!-- Toggling this checkbox enables the XRP
+               account input on the main screen -->
+          <label class="switch">
+            <input id="xrp_account_toggle" type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div id="xrp_account_toggle_info">
+          Allows you to explicity set the XRP account to setup if different than the one corresponding to the secret key. Useful for the case where you are using a RegularKeyPair to sign transactions.
+        </div>
+      </div>
+    </div>
+
+    <!-- Info subsection: contains informational content
+         relating to application help -->
+    <div id="info_subsection">
+      <div id="info_about">
+        <div id="info_about_header" class="info_header">
+          <div class="info_title">About</div>
+          <img src="../assets/Icon-xMovement.svg" />
+        </div>
+
+        <p>
+          This utility will setup your XRP cryptocurrency account to receive the Flare Spark token when it is airdropped.
+        </p>
+
+        <p>
+          This tool will create a transaction that sets the message key on your XRP account to the provided ETH address. A snapshot of the XRP ledger will be taken for the Flare Spark airdrop after which the accounts which have been setup this way will receive corresponding tokens</li>
+        </p>
+
+        <p>
+          This project is 100% open source, documented, and tested.
+        </p>
+      </div>
+
+      <div id="info_security">
+        <div id="info_security_header" class="info_header">
+          <div class="info_title">Security &amp; tips</div>
+          <img src="../assets/Icon-security.svg" />
+        </div>
+
+        <!-- Same security info as security window -->
+        <div id="security_subsection">
+          <div id="security_info">
+            <div id="security_info_preface">
+              <p>
+                Cryptocurrencies allow you to <i>be your own bank</i> but <b>with this power comes responsibility</b>.
+              </p>
+
+              <p>
+                It is essential that you trust the tools that you use to manage your private keys and only run these on systems which are fully secure.
+              </p>
+            </div>
+
+            <div class="security_info_separator">
+            </div>
+
+            <div id="security_info_header">
+              To ensure your system is as secure as possible make sure to do the following
+            </div>
+
+            <div id="security_info_section1">
+              <div id="security_info_subsection1">
+                Only run this software in a private location and on a secure network. Do not connect to public wifi or that in a location such as an internet cafe or similar. Ensure you are not being monitored, either in person or via a surveillance system, while using this software.
+              </div>
+
+              <div id="security_info_subsection2">
+                <img src="../assets/img-privateNetwork.svg" />
+              </div>
+            </div>
+
+            <div id="security_info_section2">
+              <div id="security_info_subsection3">
+                <p>
+                Ensure your system is up to date and has all security updates provided by your operating system's vendor (Microsoft, Apple, RedHat, Ubuntu/Debian).
+                </p>
+
+                <p>
+                Ideally this system should be dedicated to cryptocurrency key management and no unrelated software installed and at no point this system was phsyically compromised. This can include the installation of keyloggers, monitoring software, or similar.
+                </p>
+              </div>
+
+              <div id="security_info_subsection4">
+                <img src="../assets/img-updatedComputer.svg" />
+              </div>
+            </div>
+
+            <div class="security_info_separator">
+            </div>
+
+            <div id="security_info_section3">
+              Optionally consider running this tool in offline mode. This can be enabled via the application 'Settings' (gear icon in the sidebar). In offline mode you will not be connected to any network, though you will have to take the extra step of submitting the signed transaction at the end of the process.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="info_legalese">
+        <div id="info_legalese_header" class="info_header">
+          <div class="info_title">Legalese</div>
+          <img src="../assets/Icon-legalDoc.svg" />
+        </div>
+
+        <p>
+          Copyright (C) 2021 - Dev Null Productions
+        </p>
+
+        <p>
+          Made available under the MIT license.
+        </p>
+
+        <p>
+          This application provides with no warranties or guarantees pertaining to functionality or use. Make sure you know what you are doing and the risks involved with managing cryptocurrencies before using this application. By using this application you agree to absolve Dev Null Productions of any liabilities that may arise.
+        </p>
+      </div>
+    </div>
   </div>
 </body>
 </html>
