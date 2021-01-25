@@ -105,9 +105,7 @@ ipcMain.on('close_splash', (event) => {
 
 // Quit application when all windows are closed
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  app.quit()
 })
 
 // Create main window on app activation
