@@ -1,6 +1,6 @@
 # Flexrp - Flare / XRP Account Setup Tool
 
-This application will setup a XRP account for the Flare Spark token distribution.
+This application will setup a XRP account for the Flare Spark token (FLR) distribution.
 
 (C) 2020-2021 - Dev Null Productions <devnullproductions@gmail.com>
 
@@ -25,11 +25,11 @@ While by default this tool runs in *online* mode, submitting the command to setu
 
 ## Usage
 
-Flexrp works via a simple one step process where you specify the secret key to your XRP account and the public address of the ETH wallet to associate with it.
+Flexrp works via a simple one step process where you specify the secret key to your XRP account and the public address of the FLR wallet to associate with it.
 
-If you do not have an existing Ethereum wallet, this tool will allow you to create one on the fly.
+If you do not have an existing Flare Spark wallet, this tool will allow you to create one on the fly.
 
-**IF YOU CREATE AN ETHEREUM WALLET, MAKE SURE TO STORE THE PRIVATE KEY. IT WILL NOT BE RECOVERABLE ONCE THE WINDOW IS CLOSED.**
+**IF YOU CREATE AN FLARE WALLET, MAKE SURE TO STORE THE PRIVATE KEY. IT WILL NOT BE RECOVERABLE ONCE THE WINDOW IS CLOSED.**
 
 To start launch the application and confirm you are running on a secure system:
 
@@ -46,11 +46,11 @@ Enter your XRP secret key here:
 
 Click the *eye icon* to view / hide your XRP secret key.
 
-Enter your ETH public address here:
+Enter your FLR public address here:
 
-![Eth Address](screenshots/eth-address-input.png)
+![FLR Address](screenshots/eth-address-input.png)
 
-Click the **+** icon to create a new ETH wallet, the existing one (if any) will be replaced. 
+Click the **+** icon to create a new FLR wallet, the existing one (if any) will be replaced.
 
 Finally click *Submit* to setup your account.
 
