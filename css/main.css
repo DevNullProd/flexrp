@@ -254,9 +254,14 @@
 
 #settings_subsection h1{
   margin: 0;
+  font-family: DMSans;
 }
 
 /* network selector style */
+
+#network_selector h2{
+  font-family: DMSans;
+}
 
 #networks{
   display: flex;
