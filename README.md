@@ -13,8 +13,6 @@ Download and run the following:
 - On RedHat/Fedora Linux: [flexrp.rpm](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp-2.0.1.x86_64.rpm)
 - On Ubuntu/Debian Linux: [flexrp.deb](https://github.com/DevNullProd/flexrp/raw/main/dist/flexrp_2.0.1_amd64.deb)
 
-MacOS support coming soon!
-
 Once installed run the **flexrp** app to use this tool.
 
 ## Warning
