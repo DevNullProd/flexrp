@@ -1,6 +1,6 @@
 # Flexrp - Flare / XRP Account Setup Tool
 
-This application will setup a XRP account for the Flare Spark token airdrop.
+This application will setup a XRP account for the Flare Spark token distribution.
 
 (C) 2020-2021 - Dev Null Productions <devnullproductions@gmail.com>
 
@@ -66,7 +66,7 @@ If operating in *offline* mode, you will be provided the XRP transaction to setu
 
 If operation in *online* mode (default), the transaction will automatically submitted and confirmation presented.
 
-You are now done! You will receive Flare Spark tokens on the date of the airdrop!
+You are now done! You will receive Flare Spark tokens on the date of the distribution!
 
 ## Settings
 
