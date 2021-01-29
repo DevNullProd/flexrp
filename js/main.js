@@ -6,7 +6,7 @@ const {ipcRenderer} = require('electron')
 var settings = {
   testnet : false,
   offline : false,
-  fee : null,
+  fee : 0.00002,
   sequence : null,
   maxLedgerVersion : null,
   specify_account : false
@@ -17,7 +17,7 @@ var inputs_valid = {
   xrp_secret : false,
   xrp_address : false,
   eth_address : false,
-  fee : false,
+  fee : true,
   sequence : false,
   max_ledger_version : false
 }
@@ -542,6 +542,8 @@ function validate_fee(){
 // Validate fee on input change
 function wire_up_fee(){
   var fee = document.getElementById("fee");
+  fee.value = settings.fee;
+
   fee.addEventListener("input",function(e){
     validate_fee();
   },false);
