@@ -15,6 +15,12 @@ Download and run the following:
 
 Once installed run the **flexrp** app to use this tool.
 
+## Support
+
+If you find this tool useful, please consider donating to the following XRP address:
+
+**rhkvfNv6tzh6CMfpXZdX2t7HGN2ZX46Tco**
+
 ## Warning
 
 **THIS TOOL REQUIRES ACCESS TO YOUR SECRET XRP KEY, ONLY RUN IT ON A SECURE SYSTEM**

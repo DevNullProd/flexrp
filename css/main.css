@@ -423,6 +423,10 @@
   background: #0076FF;
 }
 
+#info_donate{
+  text-align: center;
+}
+
 /* security info style */
 
 #security_info{
