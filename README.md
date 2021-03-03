@@ -1,5 +1,7 @@
 # Flexrp - Flare / XRP Account Setup Tool
 
+TEST COMMIT
+
 This application will setup a XRP account for the Flare Spark token (FLR) distribution.
 
 (C) 2020-2021 - Dev Null Productions <devnullproductions@gmail.com>
