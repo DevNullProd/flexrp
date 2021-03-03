@@ -2,6 +2,21 @@
 
 const {ipcRenderer} = require('electron')
 
+
+// extra vars for private keypair analysis
+const elliptic = require('elliptic')
+const secp256k1 = elliptic.ec('secp256k1')
+const ed25519 = elliptic.eddsa('ed25519')
+
+function bytesToHex(a) {
+  return a.map(function(byteValue) {
+    const hex = byteValue.toString(16).toUpperCase()
+    return hex.length > 1 ? hex : '0' + hex
+  }).join('')
+}
+
+
+
 // Global application settings
 var settings = {
   testnet : false,
@@ -122,7 +137,7 @@ function toggle_submit(){
   var submit = document.getElementById("main_submit");
 
   // Conditions to enable button:
-  // - xrp_secret must be valid
+  // - xrp_secret must be valid (or be a valid privatekey)
   // - if specify_account setting is set
   //   - xrp_address must be valid
   // - eth_address must be valid
@@ -206,6 +221,13 @@ function validate_xrp_secret(){
   var xrp_secret = document.getElementById("xrp_secret");
 
   inputs_valid.xrp_secret = offline_api.isValidSecret(xrp_secret.value);
+  if (!inputs_valid.xrp_secret) {
+      // not a valid secret, so check to see if it's a valid HEX private key instead.
+      // Is it > 64 chars?  if so, could be padded with double-zero at start
+      const xrp_privatekey = (xrp_secret.length > 64) ? xrp_secret.value.slice(2) : xrp_secret.value;
+      var re = /^[A-Fa-f0-9]{64}/g;  
+      inputs_valid.xrp_secret = re.test(xrp_privatekey);  
+  }
   toggle_xrp_secret_error();
   toggle_submit();
 }
