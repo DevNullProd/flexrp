@@ -47,6 +47,15 @@
   margin-top: 125px;
 }
 
+#splash_donation{
+  text-align: center;
+  font-family: Poppins;
+  margin-top: 50px;
+  padding: 15px;
+  background: #FEE76D;
+  border-radius: 5px;
+}
+
 #splash_security{
   flex-basis: 20%;
   border-top: 1px solid black;
