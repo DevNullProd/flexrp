@@ -17,7 +17,7 @@ Once installed run the **flexrp** app to use this tool.
 
 ## Warning
 
-**THIS TOOL REQUIRES ACCESS TO YOUR SECRET XRP KEY, ONLY RUN IT ON A SECURE SYSTEM**
+**THIS TOOL REQUIRES ACCESS TO YOUR SECRET XRP KEY (OR YOUR PRIVATE KEY), ONLY RUN IT ON A SECURE SYSTEM**
 
 Flexrp is 100% open source and auditable. Every effort has been made to make the code as transparent and easy to read and understand as possible.
 
@@ -25,7 +25,7 @@ While by default this tool runs in *online* mode, submitting the command to setu
 
 ## Usage
 
-Flexrp works via a simple one step process where you specify the secret key to your XRP account and the public address of the FLR wallet to associate with it.
+Flexrp works via a simple one step process where you specify the secret key to your XRP account (or alternatively your private key as exported from certain wallet types) and the public address of the FLR wallet to associate with it.
 
 If you do not have an existing Flare Spark wallet, this tool will allow you to create one on the fly.
 
@@ -40,11 +40,11 @@ Optionally click the settings icon in the navigation to configure application se
 ![Settings](screenshots/settings-control.png)
 ![Settings](screenshots/settings-window.png)
 
-Enter your XRP secret key here:
+Enter your XRP secret key (or private key) here:
 
 ![XRP Secret](screenshots/xrp-secret-input.png)
 
-Click the *eye icon* to view / hide your XRP secret key.
+Click the *eye icon* to view / hide your XRP secret key / private key.
 
 Enter your FLR public address here:
 
@@ -74,7 +74,7 @@ Application settings can be configured by clicking the gears icons in the naviga
 
 - **Offline mode** - Flexrp will **not** connect to any XRP server and instead simply generate and sign a transaction for subsequent submission to the network. **YOU MUST INDEPENDENTLY SUBMIT THE PRODUCED TRANSACTION TO RECEIVE FLARE TOKENS**.
 
-- **Specify XRP Account to setup** - Allows you to explicitly set the XRP account to setup if different than the one corresponding to the secret key (which will be used to sign the transaction). Useful for the case where you are using a *RegularKeyPair* to sign transactions (see [this](https://xrpl.org/assign-a-regular-key-pair.html) for more info).
+- **Specify XRP Account to setup** - Allows you to explicitly set the XRP account to setup if different than the one corresponding to the secret key / private key (which will be used to sign the transaction). Useful for the case where you are using a *RegularKeyPair* to sign transactions (see [this](https://xrpl.org/assign-a-regular-key-pair.html) for more info).
 
 When in offline mode, you will be required to configure a few more parameters to successfully be able to generate a XRP transaction. These are:
 
