@@ -19,6 +19,7 @@
     }
   },
   "dependencies": {
+    "elliptic": "^6.5.4",
     "ethereumjs-wallet": "^1.0.1",
     "ripple-lib": "^1.8.2"
   },
