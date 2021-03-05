@@ -1,6 +1,6 @@
 {
   "name": "flexrp",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Flare / XRP Account Setup App",
   "main": "js/index.js",
   "author": "Dev Null Productions <devnullproductions@gmail.com>",
