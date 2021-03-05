@@ -221,14 +221,16 @@ function validate_xrp_secret(){
   var xrp_secret = document.getElementById("xrp_secret");
 
   inputs_valid.xrp_secret = offline_api.isValidSecret(xrp_secret.value);
+
+  // Not a valid secret, check to see if it's a valid HEX private key instead
   if (!inputs_valid.xrp_secret) {
-      // not a valid secret, so check to see if it's a valid HEX private key instead.
-      // Is it > 64 chars?  If so, could be padded with double-zero at start (for secp256k1) 
-      // or it could be padded with ED (for ed25519)
-      const xrp_privatekey = (xrp_secret.value.length > 64) ? xrp_secret.value.slice(2) : xrp_secret.value;
-      var re = /^[A-Fa-f0-9]{64}/g;  
-      inputs_valid.xrp_secret = re.test(xrp_privatekey);  
+    // Must be 64-66 valid gex characters
+    var re = /^[A-Fa-f0-9]*$/g;
+    inputs_valid.xrp_secret = xrp_secret.value.length >= 64 &&
+                              xrp_secret.value.length <= 66 &&
+                              re.test(xrp_secret.value);
   }
+
   toggle_xrp_secret_error();
   toggle_submit();
 }
