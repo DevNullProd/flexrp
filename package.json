@@ -21,6 +21,9 @@
   "dependencies": {
     "elliptic": "^6.5.4",
     "ethereumjs-wallet": "^1.0.1",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-sass": "^4.1.0",
     "ripple-lib": "^1.8.2"
   },
   "scripts": {
