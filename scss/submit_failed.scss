@@ -1,0 +1,27 @@
+#submit_failed{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#submit_failed_info{
+  background: #F45151;
+  flex-grow: 1;
+  text-align: center;
+  color: white;
+  padding: 50px 20px;
+  font-family: Poppins;
+}
+
+#submit_failed_info h3{
+  font-family: DMSans;
+}
+
+#ok{
+  height: 50px;
+  width: 100%;
+  border: none;
+  color: #F45151;
+  font-family: DMSans;
+  font-size: 1.2rem;
+}
