@@ -6,7 +6,6 @@ var cleanCss = require("gulp-clean-css");
 function style() {
   return gulp
     .src("scss/**/*.scss")
-    .pipe(sourcemaps.init())
     .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
     .pipe(cleanCss())
     .pipe(gulp.dest("css"));
